@@ -1,6 +1,7 @@
 
 const getAlarmTime = (time)=>{
-  let hours = time.getHours()
+  let hours = time.getUTCHours() + 8
+  if (hours > 24){ hours -= 24 }
   if (hours <= 12){
     return hours + 4
   }else{
