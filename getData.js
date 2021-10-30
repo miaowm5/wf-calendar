@@ -1,22 +1,12 @@
 
-const axios = require('axios').default
+const { Client } = require("@notionhq/client")
 
+const notion = new Client({ auth: process.env.NOTION_TOKEN })
 const database = process.env.NOTION_DATABASE
-const token = process.env.NOTION_TOKEN
-const version = '2021-08-16'
-const url = `https://api.notion.com/v1/databases/${database}/query`
 
 const main = async ()=>{
-  try{
-    const response = await axios({
-      url, method: 'POST',
-      headers: { 'Authorization': `Bearer ${token}`, 'Notion-Version': version },
-    })
-    return response.data.results
-  }catch(error){
-    console.error(error)
-    return null
-  }
+  const result = await notion.databases.query({ database_id: database })
+  return result.results
 }
 
 module.exports = main
