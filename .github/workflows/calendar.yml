@@ -31,3 +31,7 @@ jobs:
         deploy_type: 'calendar'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: deploy to cloudflare
+      uses: wei/curl@v1
+      with:
+        args: -X POST ${{ secrets.CLOUDFLARE_WEBHOOK }}
