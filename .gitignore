@@ -1,3 +1,6 @@
 ﻿node_modules
 .env
 event.ics
+event-ch.ics
+event-tw.ics
+event-g.ics

@@ -9,9 +9,7 @@ const getAlarmTime = (time)=>{
   }
 }
 
-const genReminder = (title, time)=>{
-  const server = '日服'
-
+const genReminder = (title, time, server)=>{
   const timeDate = [
     time.getUTCFullYear(),
     time.getUTCMonth() + 1,
@@ -36,7 +34,7 @@ const genReminder = (title, time)=>{
   }
 }
 
-const parse = (item)=>{
+const parse = (item, server)=>{
   const prop = item.properties
   const timeStart = prop.StartDate.date ? new Date(prop.StartDate.date.start) : null
   const timeEnd = prop.Date.date ? new Date(prop.Date.date.start) : null
@@ -44,11 +42,11 @@ const parse = (item)=>{
   const title = prop.Name.title[0].plain_text
   const result = []
   if (timeStart && timeEnd){
-    result.push(genReminder(`[${tag}开始]${title}`, timeStart))
-    result.push(genReminder(`[${tag}结束]${title}`, timeEnd))
+    result.push(genReminder(`[${tag}开始]${title}`, timeStart, server))
+    result.push(genReminder(`[${tag}结束]${title}`, timeEnd, server))
   }else{
-    if (timeStart){ result.push(genReminder(`[${tag}]${title}`, timeStart)) }
-    if (timeEnd){ result.push(genReminder(`[${tag}]${title}`, timeEnd)) }
+    if (timeStart){ result.push(genReminder(`[${tag}]${title}`, timeStart, server)) }
+    if (timeEnd){ result.push(genReminder(`[${tag}]${title}`, timeEnd, server)) }
   }
   return result
 }

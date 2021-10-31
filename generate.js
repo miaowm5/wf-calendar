@@ -1,6 +1,7 @@
 
 const fs = require('fs')
 const ics = require('ics')
+const filename = require('./filename')
 
 const create = (event)=>{
   return new Promise((success, fail)=>{
@@ -10,18 +11,18 @@ const create = (event)=>{
     })
   })
 }
-const save = (value, filename = `${__dirname}/event.ics`)=>{
+const save = (value, server)=>{
   return new Promise((success, fail)=>{
-    fs.writeFile(filename, value, (err)=>{
+    fs.writeFile(filename(server), value, (err)=>{
       if (err){ fail(err) }
       else{ success() }
     })
   })
 }
 
-const gen = async (event)=>{
+const gen = async ([event, server])=>{
   const value = await create(event)
-  await save(value)
+  await save(value, server)
 }
 
 module.exports = gen

@@ -6,8 +6,11 @@ const generate = require('./generate')
 
 const main = async ()=>{
   const list = await getData()
-  const event = list.reduce((r, item)=>r.concat(parseData(item)), [])
-  await generate(event)
+  const eventList = list.map(([data, name])=>{
+    const event = data.reduce((r, item)=>r.concat(parseData(item, name)), [])
+    return [event, name]
+  })
+  await Promise.all(eventList.map((item)=>generate(item)))
 }
 
 main()
