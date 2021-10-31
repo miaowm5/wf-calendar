@@ -5,11 +5,11 @@ const notion = new Client({ auth: process.env.NOTION_TOKEN })
 const database = process.env.NOTION_DATABASE
 
 const loadList = async ()=>{
-  const list = await notion.blocks.children.list({ block_id: database })
-  return list.results.reduce((arr, item)=>{
-    if(item.type !== "child_database"){ return arr }
-    return [...arr, [item.id, item.child_database.title]]
-  }, [])
+  const result = await notion.databases.query({ database_id: database })
+  return result.results.map((item)=>{
+    const {id, server} = item.properties
+    return [id.rich_text[0].plain_text, server.title[0].plain_text]
+  })
 }
 const loadDatabse = async (item)=>{
   const result = await notion.databases.query({ database_id: item[0] })
