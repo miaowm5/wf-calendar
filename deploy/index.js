@@ -21,7 +21,7 @@ const run = async ()=>{
 
   // 将当前的分支内容拉取到 oldDir
   process.chdir(oldDir)
-  await git(['clone', remoteURL, '-b', branch, '--single-branch', '--depth=1'])
+  await git(['clone', remoteURL, '-b', branch, '--single-branch', '--depth=1', '.'])
   await fs.remove(path.join(oldDir, '.git'))
 
   // 创建一个空的分支到 newDir
