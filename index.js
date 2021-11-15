@@ -8,12 +8,12 @@ const generate = require('./generate')
 const main = async ()=>{
   await fs.ensureDir('./dist')
   await fs.emptyDir('./dist')
-  const list = await getData()
-  const eventList = list.map(([data, name])=>{
-    const event = data.reduce((r, item)=>r.concat(parseData(item, name)), [])
-    return [event, name]
+  let list = await getData()
+  list = list.map((item)=>{
+    const event = item.list.reduce((r, item)=>r.concat(parseData(item, item.server)), [])
+    return { ...item, event }
   })
-  await Promise.all(eventList.map((item)=>generate(item)))
+  await Promise.all(list.map((item)=>generate(item)))
 }
 
 main().then(()=>{

@@ -7,13 +7,17 @@ const database = process.env.NOTION_DATABASE
 const loadList = async ()=>{
   const result = await notion.databases.query({ database_id: database })
   return result.results.map((item)=>{
-    const {id, server} = item.properties
-    return [id.rich_text[0].plain_text, server.title[0].plain_text]
+    const {id, server, notion} = item.properties
+    return {
+      server: server.title[0].plain_text,
+      id: id.rich_text[0].plain_text,
+      notion: notion.rich_text[0].plain_text,
+    }
   })
 }
 const loadDatabse = async (item)=>{
-  const result = await notion.databases.query({ database_id: item[0] })
-  return [result.results, item[1]]
+  const result = await notion.databases.query({ database_id: item.id })
+  return { ...item, list: result.results }
 }
 const main = async ()=>{
   const list = await loadList()

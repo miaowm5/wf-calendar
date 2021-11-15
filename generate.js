@@ -20,7 +20,7 @@ const save = (value, server)=>{
   })
 }
 
-const gen = async ([event, server])=>{
+const gen = async ({event, server})=>{
   const value = await create(event)
   await save(value, server)
 }
