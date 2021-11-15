@@ -7,7 +7,7 @@ const git = require('./git')
 const dirname = path.join(__dirname, '../')
 const branch = 'gh-pages-test'
 
-async function run() {
+const run = async ()=>{
   const oldDir = path.join(dirname, './temp/branch-old')
   const newDir = path.join(dirname, './temp/branch-new')
   await fs.ensureDir(oldDir)
@@ -45,4 +45,12 @@ async function run() {
   process.chdir(dirname)
 }
 
-run()
+const main = async ()=>{
+  try {
+    await run()
+  }catch(e){
+    throw e
+  }
+}
+
+main()
