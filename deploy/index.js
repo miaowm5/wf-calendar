@@ -1,4 +1,5 @@
 
+require('dotenv').config()
 const path = require('path')
 const fs = require('fs-extra')
 const getRemoteURL = require('./remoteUrl')
