@@ -3,7 +3,6 @@
 name: Build Calendar
 
 on:
-  schedule:
   workflow_dispatch:
 
 jobs:
