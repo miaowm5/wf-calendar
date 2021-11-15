@@ -8,6 +8,9 @@ const dirname = path.join(__dirname, '../')
 const branch = 'gh-pages-test'
 
 const run = async ()=>{
+  await fs.ensureDir('./temp')
+  await fs.emptyDir('./temp')
+
   const oldDir = path.join(dirname, './temp/branch-old')
   const newDir = path.join(dirname, './temp/branch-new')
   await fs.ensureDir(oldDir)
