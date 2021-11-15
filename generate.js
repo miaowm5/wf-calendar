@@ -1,6 +1,5 @@
 
 const fs = require('fs')
-const fse = require('fs-extra')
 const ics = require('ics')
 const filename = require('./filename')
 
@@ -22,7 +21,6 @@ const save = (value, server)=>{
 }
 
 const gen = async ([event, server])=>{
-  await fse.ensureDir(`${__dirname}/dist`)
   const value = await create(event)
   await save(value, server)
 }
