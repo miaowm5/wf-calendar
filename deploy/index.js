@@ -8,7 +8,7 @@ const git = require('./git')
 const dirname = path.join(__dirname, '../')
 const branch = 'gh-pages'
 
-const run = async ()=>{
+const main = async ()=>{
   await fs.ensureDir('./temp')
   await fs.emptyDir('./temp')
 
@@ -49,12 +49,8 @@ const run = async ()=>{
   process.chdir(dirname)
 }
 
-const main = async ()=>{
-  try {
-    await run()
-  }catch(e){
-    throw e
-  }
-}
-
-main()
+main().then(()=>{
+  console.log('done')
+}).catch((e)=>{
+  throw e
+})
