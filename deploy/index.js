@@ -52,5 +52,6 @@ const main = async ()=>{
 main().then(()=>{
   console.log('done')
 }).catch((e)=>{
+  console.error(e)
   throw e
 })
