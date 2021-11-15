@@ -6,7 +6,7 @@ const getRemoteURL = require('./remoteUrl')
 const git = require('./git')
 
 const dirname = path.join(__dirname, '../')
-const branch = 'gh-pages-test'
+const branch = 'gh-pages'
 
 const run = async ()=>{
   await fs.ensureDir('./temp')
