@@ -26,7 +26,11 @@ async function run() {
   await git(['checkout', '--orphan', branch])
 
   // 更新内容
-  await fs.copy(path.join(dirname, './index.js'), path.join(newDir, './index.js'))
+  // 将先前的结果拷贝到目标文件夹
+  await fs.copy(oldDir, newDir)
+  // 更新生成的日历文件
+  await copy(path.join(dirname, 'event.ics'), path.join(newDir, 'event.ics'))
+  await copy(path.join(dirname, 'event-ch.ics'), path.join(newDir, 'event-ch.ics'))
 
   // 将 newDir 的内容强制推送到目标分支
   process.chdir(newDir)

@@ -19,8 +19,11 @@ jobs:
     - name: install dep
       run: npm ci
     - name: build calendar
+      run: npm start
+      env:
+        NOTION_DATABASE: ${{ secrets.NOTION_DATABASE }}
+        NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+    - name: deploy site
       run: npm run deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        NOTION_DATABASE: ${{ secrets.NOTION_DATABASE }}
-        NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
