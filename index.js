@@ -13,4 +13,8 @@ const main = async ()=>{
   await Promise.all(eventList.map((item)=>generate(item)))
 }
 
-main()
+main().then(()=>{
+  console.log('done')
+}).catch((e)=>{
+  throw e
+})
