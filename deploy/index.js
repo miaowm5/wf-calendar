@@ -4,11 +4,12 @@ const fs = require('fs-extra')
 const getRemoteURL = require('./remoteUrl')
 const git = require('./git')
 
+const dirname = path.join(__dirname, '../')
 const branch = 'gh-pages-test'
 
 async function run() {
-  const oldDir = path.join(__dirname, '../temp/branch-old')
-  const newDir = path.join(__dirname, '../temp/branch-new')
+  const oldDir = path.join(dirname, './temp/branch-old')
+  const newDir = path.join(dirname, './temp/branch-new')
   await fs.ensureDir(oldDir)
   await fs.ensureDir(newDir)
 
@@ -25,7 +26,7 @@ async function run() {
   await git(['checkout', '--orphan', branch])
 
   // 更新内容
-  await fs.copy(path.join(__dirname, '../index.js'), path.join(newDir, './index.js'))
+  await fs.copy(path.join(dirname, './index.js'), path.join(newDir, './index.js'))
 
   // 将 newDir 的内容强制推送到目标分支
   process.chdir(newDir)
@@ -37,7 +38,7 @@ async function run() {
   await git(['push', '--quiet', '--force', remoteURL, branch])
 
   // 返回当前目录
-  process.chdir(__dirname)
+  process.chdir(dirname)
 }
 
 run()
