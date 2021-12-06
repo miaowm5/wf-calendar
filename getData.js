@@ -20,7 +20,7 @@ const parseData = (item)=>{
   const timeStart = prop.StartDate.date ? new Date(prop.StartDate.date.start) : null
   const timeEnd = prop.Date.date ? new Date(prop.Date.date.start) : null
   const tag = prop.Tags.select.name
-  const title = prop.Name.title[0].plain_text
+  const title = prop.Name.title.map((text)=>text.plain_text).join("")
   return { title, tag, timeStart, timeEnd }
 }
 const loadDatabse = async (item)=>{
