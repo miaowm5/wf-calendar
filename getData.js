@@ -21,7 +21,13 @@ const parseData = (item)=>{
   const timeEnd = prop.Date.date ? new Date(prop.Date.date.start) : null
   const tag = prop.Tags.select.name
   const title = prop.Name.title.map((text)=>text.plain_text).join("")
-  return { title, tag, timeStart, timeEnd }
+  const image = {}
+  if (prop.Image.files && prop.Image.files.length > 0){
+    let files = prop.Image.files[0]
+    image.name = files.name
+    image.file = files.file.url
+  }
+  return { title, tag, timeStart, timeEnd, id: item.id, image }
 }
 const loadDatabse = async (item)=>{
   const result = await notion.databases.query({ database_id: item.id })
