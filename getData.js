@@ -26,10 +26,11 @@ const parseData = (item)=>{
     let files = prop.Image.files[0]
     image.id = item.id
     image.file = files.file.url
+    image.format = files.name.split(".")[1]
     image.edit = (new Date(item.last_edited_time)).getTime()
   }
   return [
-    { title, tag, timeStart, timeEnd, id: item.id, image: Boolean(image.id) },
+    { title, tag, timeStart, timeEnd, id: item.id, image: image.format },
     image
   ]
 }
