@@ -24,14 +24,24 @@ const parseData = (item)=>{
   const image = {}
   if (prop.Image.files && prop.Image.files.length > 0){
     let files = prop.Image.files[0]
+    image.id = item.id
     image.file = files.file.url
     image.edit = (new Date(item.last_edited_time)).getTime()
   }
-  return { title, tag, timeStart, timeEnd, id: item.id, image }
+  return [
+    { title, tag, timeStart, timeEnd, id: item.id, image: Boolean(image.id) },
+    image
+  ]
 }
 const loadDatabse = async (item)=>{
   const result = await notion.databases.query({ database_id: item.id })
-  return { ...item, list: result.results.map((item)=>parseData(item)) }
+  const image = []
+  const list = result.results.map((item)=>{
+    const [itemData, itemImage] = parseData(item)
+    if (itemData.image){ image.push(itemImage) }
+    return itemData
+  })
+  return { ...item, list, image }
 }
 const main = async ()=>{
   const list = await loadList()
