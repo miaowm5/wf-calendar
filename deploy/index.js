@@ -34,7 +34,8 @@ const main = async ()=>{
   // 将先前的结果拷贝到目标文件夹
   await fs.copy(oldDir, newDir)
   // 更新生成的日历文件
-  await fs.copy(path.join(dirname, 'dist/event.ics'), path.join(newDir, 'event.ics'))
+  await fs.copy(path.join(dirname, 'dist/event-jp.ics'), path.join(newDir, 'event.ics'))
+  await fs.copy(path.join(dirname, 'dist/event-jp.ics'), path.join(newDir, 'event-jp.ics'))
   await fs.copy(path.join(dirname, 'dist/event-ch.ics'), path.join(newDir, 'event-ch.ics'))
   await fs.copy(path.join(dirname, 'dist/info.json'), path.join(newDir, 'info.json'))
   await updateImage(path.join(dirname, 'dist/imageCache.json'), newDir)

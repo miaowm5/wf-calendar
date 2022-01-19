@@ -3,14 +3,8 @@ const path = require('path')
 const http = require('http')
 const https = require('https')
 const fs = require('fs-extra')
+const { get: getImageDir } = require('../common/serverFlag')
 
-const getImageDir = (server)=>{
-  if (server === '日服'){ return `` }
-  if (server === '国服'){ return `ch` }
-  if (server === '台服'){ return `tw` }
-  if (server === '国际服'){ return `g` }
-  throw new Error(`Server Config Not Exist: ${server}`)
-}
 const download = async (url, dest)=>{
   console.log(`Download banner from ${url}`)
   const file = fs.createWriteStream(dest)
@@ -53,7 +47,7 @@ const getList = async (current, target)=>{
   })
   await fs.writeFile(cacheFile, JSON.stringify(cache))
   await Promise.all(serverList.map((server)=>{
-    return fs.ensureDir(path.join(target, 'banner', getImageDir(server) || 'jp'))
+    return fs.ensureDir(path.join(target, 'banner', getImageDir(server)))
   }))
   return updateList
 }
@@ -61,7 +55,7 @@ const getList = async (current, target)=>{
 const handleImage = async (image, target)=>{
   if (!image){ return }
   const filename = path.join(
-    getImageDir(image.server) || 'jp',
+    getImageDir(image.server),
     `${image.image.id}.${image.image.format}`
   )
   const dest = path.join(target, 'banner', filename)

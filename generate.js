@@ -1,6 +1,6 @@
 
 const ics = require('ics')
-const filename = require('./filename')
+const { get: serverFlag } = require('./common/serverFlag')
 const save = require('./save')
 
 const getAlarmTime = (time)=>{
@@ -58,7 +58,7 @@ const create = (list, server)=>{
 
 const gen = async ({list, server})=>{
   const value = await create(list, server)
-  await save(value, filename(server))
+  await save(value, `${__dirname}/dist/event-${serverFlag(server)}.ics`)
 }
 
 module.exports = gen
