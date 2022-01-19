@@ -4,6 +4,7 @@ const path = require('path')
 const fs = require('fs-extra')
 const getRemoteURL = require('./remoteUrl')
 const git = require('./git')
+const updateImage = require('./updateImage')
 
 const dirname = path.join(__dirname, '../')
 const branch = 'gh-pages'
@@ -36,6 +37,7 @@ const main = async ()=>{
   await fs.copy(path.join(dirname, 'dist/event.ics'), path.join(newDir, 'event.ics'))
   await fs.copy(path.join(dirname, 'dist/event-ch.ics'), path.join(newDir, 'event-ch.ics'))
   await fs.copy(path.join(dirname, 'dist/info.json'), path.join(newDir, 'info.json'))
+  await updateImage(path.join(dirname, 'dist/imageCache.json'), newDir)
 
   // 将 newDir 的内容强制推送到目标分支
   process.chdir(newDir)
@@ -48,6 +50,7 @@ const main = async ()=>{
 
   // 返回当前目录
   process.chdir(dirname)
+  await fs.remove('./temp')
 }
 
 main().then(()=>{
