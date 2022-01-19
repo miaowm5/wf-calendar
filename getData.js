@@ -24,8 +24,8 @@ const parseData = (item)=>{
   const image = {}
   if (prop.Image.files && prop.Image.files.length > 0){
     let files = prop.Image.files[0]
-    image.name = files.name
     image.file = files.file.url
+    image.edit = (new Date(item.last_edited_time)).getTime()
   }
   return { title, tag, timeStart, timeEnd, id: item.id, image }
 }
