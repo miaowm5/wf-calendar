@@ -6,7 +6,6 @@ const fs = require('fs-extra')
 const { get: getImageDir } = require('../common/serverFlag')
 
 const download = async (url, dest)=>{
-  console.log(`Download banner from ${url}`)
   const file = fs.createWriteStream(dest)
   await new Promise((success, fail)=>{
     const proto = url.startsWith('https:') ? https : http
@@ -22,6 +21,7 @@ const download = async (url, dest)=>{
 // 获取图片更新列表
 const getList = async (current, target)=>{
   const cacheFile = path.join(target, 'imageCache.json')
+  const newCache = {}
   let cache = {}
   if (fs.existsSync(cacheFile)){
     cache = await fs.readFile(cacheFile)
@@ -37,15 +37,12 @@ const getList = async (current, target)=>{
     serverList.push(server)
     serverData.image.forEach((image)=>{
       if (!cache[server]){ cache[server] = {} }
-      if (cache[server][image.id] !== image.edit){
-        cache[server][image.id] = image.edit
-        updateList.push({server, image, type: 'download'})
-      }else{
-        updateList.push({server, image, type: 'copy'})
-      }
+      if (!newCache[server]){ newCache[server] = {} }
+      updateList.push({server, image, type: cache[server][image.id] === image.edit ? 'copy' : 'download'})
+      newCache[server][image.id] = image.edit
     })
   })
-  await fs.writeFile(cacheFile, JSON.stringify(cache))
+  await fs.writeFile(cacheFile, JSON.stringify(newCache))
   await Promise.all(serverList.map((server)=>{
     return fs.ensureDir(path.join(target, 'banner', getImageDir(server)))
   }))
@@ -62,16 +59,17 @@ const handleImage = async (image, target)=>{
   if (image.type === 'copy'){
     const src = path.join(target, 'banner-old', filename)
     await fs.copyFile(src, dest)
-  }
-  if (image.type === 'download'){
+  }else if (image.type === 'download'){
     await download(image.image.file, dest)
   }
 }
 
 const updateImage = async (current, target)=>{
-  await fs.ensureDir(path.join(target, 'banner'))
-  await fs.remove(path.join(target, 'banner-old'))
-  await fs.rename(path.join(target, 'banner'), path.join(target, 'banner-old'))
+  const newPath = path.join(target, 'banner')
+  const oldPath = path.join(target, 'banner-old')
+  await fs.ensureDir(newPath)
+  await fs.remove(oldPath)
+  await fs.rename(newPath, oldPath)
   const updateList = await getList(current, target)
   for (i = 0; i < updateList.length; i){
     // 同时并行的任务数量为 5 个
@@ -81,7 +79,7 @@ const updateImage = async (current, target)=>{
     await Promise.all(handleList)
     i += times
   }
-  await fs.remove(path.join(target, 'banner-old'))
+  await fs.remove(oldPath)
 }
 
 module.exports = updateImage
