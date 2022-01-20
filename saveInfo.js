@@ -1,5 +1,5 @@
 
-const save = require('./save')
+const fs = require('fs-extra')
 
 const gen = async (serverList)=>{
   const list = serverList.map((serverData)=>({ ...serverData, image: undefined }))
@@ -7,8 +7,8 @@ const gen = async (serverList)=>{
     time: Date.now(),
     list,
   }
-  await save(JSON.stringify(info), `${__dirname}/dist/info.json`)
-  await save(JSON.stringify(serverList), `${__dirname}/dist/imageCache.json`)
+  await fs.writeFile(`${__dirname}/dist/info.json`, JSON.stringify(info))
+  await fs.writeFile(`${__dirname}/dist/imageCache.json`, JSON.stringify(serverList))
 }
 
 module.exports = gen
