@@ -7,7 +7,7 @@ const git = require('./git')
 const updateImage = require('./updateImage')
 
 const dirname = path.join(__dirname, '../')
-const branch = 'gh-pages'
+const branch = 'build'
 
 const main = async ()=>{
   await fs.ensureDir('./temp')
