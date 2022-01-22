@@ -6,15 +6,28 @@ const getRemoteURL = require('./remoteUrl')
 const git = require('./git')
 const updateImage = require('./updateImage')
 
-const dirname = path.join(__dirname, '../')
+const dirname = path.join(__dirname, '../dist')
 const branch = 'build'
 
-const main = async ()=>{
-  await fs.ensureDir('./temp')
-  await fs.emptyDir('./temp')
+// 更新内容
+const update = async (newDir)=>{
+  const generateDir = path.join(dirname, './generate')
+  // 更新日历
+  await fs.copy(path.join(generateDir, 'event-jp.ics'), path.join(newDir, 'event.ics'))
+  await fs.copy(path.join(generateDir, 'event-jp.ics'), path.join(newDir, 'event-jp.ics'))
+  await fs.copy(path.join(generateDir, 'event-ch.ics'), path.join(newDir, 'event-ch.ics'))
+  // 更新数据
+  await fs.copy(path.join(generateDir, 'data'), path.join(newDir, 'data'))
+  // 更新图片
+  await updateImage(generateDir, newDir)
+}
 
-  const oldDir = path.join(dirname, './temp/branch-old')
-  const newDir = path.join(dirname, './temp/branch-new')
+const main = async ()=>{
+  await fs.ensureDir(path.join(dirname, './deploy'))
+  await fs.emptyDir(path.join(dirname, './deploy'))
+
+  const oldDir = path.join(dirname, './deploy/old')
+  const newDir = path.join(dirname, './deploy/new')
   await fs.ensureDir(oldDir)
   await fs.ensureDir(newDir)
 
@@ -30,15 +43,11 @@ const main = async ()=>{
   await git(['init'])
   await git(['checkout', '--orphan', branch])
 
-  // 更新内容
-  // 将先前的结果拷贝到目标文件夹
+  // 将上一次的提交结果拷贝到 newDir
   await fs.copy(oldDir, newDir)
-  // 更新生成的日历文件
-  await fs.copy(path.join(dirname, 'dist/event-jp.ics'), path.join(newDir, 'event.ics'))
-  await fs.copy(path.join(dirname, 'dist/event-jp.ics'), path.join(newDir, 'event-jp.ics'))
-  await fs.copy(path.join(dirname, 'dist/event-ch.ics'), path.join(newDir, 'event-ch.ics'))
-  await fs.copy(path.join(dirname, 'dist/info.json'), path.join(newDir, 'info.json'))
-  await updateImage(path.join(dirname, 'dist/imageCache.json'), newDir)
+
+  // 根据本次的生成结果更新 newDir
+  await update(newDir)
 
   // 将 newDir 的内容强制推送到目标分支
   process.chdir(newDir)
@@ -48,10 +57,6 @@ const main = async ()=>{
   const author = 'github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>'
   await git(['commit', '--author', author, '--message', 'Deploy to GitHub pages'])
   await git(['push', '--quiet', '--force', remoteURL, branch])
-
-  // 返回当前目录
-  process.chdir(dirname)
-  await fs.remove('./temp')
 }
 
 main().then(()=>{

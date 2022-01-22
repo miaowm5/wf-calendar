@@ -19,35 +19,35 @@ const download = async (url, dest)=>{
 }
 
 // 获取图片更新列表
-const getList = async (current, target)=>{
-  const cacheFile = path.join(target, 'imageCache.json')
+const getList = async (generate, target)=>{
+  const cachePath = path.join(target, 'deploy/bannerCache.json')
+  const infoPath = path.join(generate, 'deploy/info.json')
+
   const newCache = {}
+  const serverList = await fs.readJson(infoPath)
   let cache = {}
-  if (fs.existsSync(cacheFile)){
-    cache = await fs.readFile(cacheFile)
-    cache = JSON.parse(cache.toString())
-  }
-  let newFile = await fs.readFile(current)
-  newFile = JSON.parse(newFile.toString())
+  if (fs.existsSync(cachePath)){ cache = await fs.readJson(cachePath) }
 
   const updateList = []
-  const serverList = []
-  newFile.forEach((serverData)=>{
-    const server = serverData.server
-    serverList.push(server)
-    serverData.image.forEach((image)=>{
+  serverList.forEach(({ server, image: images })=>{
+    images.forEach((image)=>{
       if (!cache[server]){ cache[server] = {} }
       if (!newCache[server]){ newCache[server] = {} }
-      updateList.push({server, image, type: cache[server][image.id] === image.edit ? 'copy' : 'download'})
+      updateList.push({
+        server,
+        image,
+        type: cache[server][image.id] === image.edit ? 'copy' : 'download'
+      })
       newCache[server][image.id] = image.edit
     })
   })
-  await fs.writeFile(cacheFile, JSON.stringify(newCache))
-  await Promise.all(serverList.map((server)=>{
+  await fs.outputFile(cachePath, JSON.stringify(newCache))
+  await Promise.all(serverList.map(({ server })=>{
     return fs.ensureDir(path.join(target, 'banner', getImageDir(server)))
   }))
   return updateList
 }
+
 // 处理图片的更新
 const handleImage = async (image, target)=>{
   if (!image){ return }
@@ -64,13 +64,16 @@ const handleImage = async (image, target)=>{
   }
 }
 
-const updateImage = async (current, target)=>{
+const updateImage = async (generate, target)=>{
+  // 将原本的 banner 目录备份到 banner-old 目录
   const newPath = path.join(target, 'banner')
   const oldPath = path.join(target, 'banner-old')
   await fs.ensureDir(newPath)
   await fs.remove(oldPath)
   await fs.rename(newPath, oldPath)
-  const updateList = await getList(current, target)
+  // 获取图片列表
+  const updateList = await getList(generate, target)
+  // 执行图片的更新操作（下载或从 banner-old 目录复制）
   for (i = 0; i < updateList.length; i){
     // 同时并行的任务数量为 5 个
     const times = 5
@@ -79,6 +82,7 @@ const updateImage = async (current, target)=>{
     await Promise.all(handleList)
     i += times
   }
+  // 删除 banner-old 目录
   await fs.remove(oldPath)
 }
 

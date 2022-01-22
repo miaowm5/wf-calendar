@@ -6,7 +6,7 @@ const getData = require('./getData')
 const generate = require('./generate')
 const saveInfo = require('./saveInfo')
 
-const dist = path.join(__dirname, '../dist')
+const dist = path.join(__dirname, '../dist/generate')
 
 const main = async ()=>{
   await fs.ensureDir(dist)

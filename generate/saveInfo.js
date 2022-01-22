@@ -6,8 +6,8 @@ const gen = async (serverList)=>{
     list,
   }
   return [
-    ['info.json', JSON.stringify(info)],
-    ['imageCache.json', JSON.stringify(serverList)],
+    ['data/info.json', JSON.stringify(info)],
+    ['deploy/info.json', JSON.stringify(serverList)],
   ]
 }
 
