@@ -1,5 +1,4 @@
 
-const fs = require('fs-extra')
 const ics = require('ics')
 const { get: serverFlag } = require('../common/serverFlag')
 
@@ -58,7 +57,7 @@ const create = (list, server)=>{
 
 const gen = async ({list, server})=>{
   const value = await create(list, server)
-  await fs.writeFile(`./dist/event-${serverFlag(server)}.ics`, value)
+  return [`event-${serverFlag(server)}.ics`, value]
 }
 
 module.exports = gen
