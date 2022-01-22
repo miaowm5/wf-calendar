@@ -13,7 +13,7 @@
   "dependencies": {
     "@actions/exec": "^1.1.0",
     "@notionhq/client": "^0.4.4",
-    "dotenv": "^10.0.0",
+    "dotenv": "^14.2.0",
     "fs-extra": "^10.0.0",
     "ics": "^2.31.0"
   }
