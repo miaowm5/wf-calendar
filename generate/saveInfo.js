@@ -7,8 +7,8 @@ const gen = async (serverList)=>{
     time: Date.now(),
     list,
   }
-  await fs.writeFile(`${__dirname}/dist/info.json`, JSON.stringify(info))
-  await fs.writeFile(`${__dirname}/dist/imageCache.json`, JSON.stringify(serverList))
+  await fs.writeFile(`./dist/info.json`, JSON.stringify(info))
+  await fs.writeFile(`./dist/imageCache.json`, JSON.stringify(serverList))
 }
 
 module.exports = gen

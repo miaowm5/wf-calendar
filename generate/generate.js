@@ -1,7 +1,7 @@
 
 const fs = require('fs-extra')
 const ics = require('ics')
-const { get: serverFlag } = require('./common/serverFlag')
+const { get: serverFlag } = require('../common/serverFlag')
 
 const getAlarmTime = (time)=>{
   let hours = time.getUTCHours() + 8
@@ -58,7 +58,7 @@ const create = (list, server)=>{
 
 const gen = async ({list, server})=>{
   const value = await create(list, server)
-  await fs.writeFile(`${__dirname}/dist/event-${serverFlag(server)}.ics`, value)
+  await fs.writeFile(`./dist/event-${serverFlag(server)}.ics`, value)
 }
 
 module.exports = gen

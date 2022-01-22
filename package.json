@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "npm run generate",
+    "generate": "node generate/index.js",
     "deploy": "node deploy/index.js"
   },
   "author": "",
