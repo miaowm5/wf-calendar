@@ -18,18 +18,19 @@
 </script>
 
 {#await promise}
-  <p>读取数据日历列表中...</p>
+  <p class="hint">读取数据日历列表中...</p>
 {:then}
   {#each $data.list as server}
     <Server server={server} />
   {/each}
   <Time date={$data.time} />
 {:catch}
-  <p>日历列表读取失败</p>
+  <p class="hint">日历列表读取失败</p>
 {/await}
 
 <style>
-  p{
+  .hint{
     text-align: center;
+    margin-top: 1em;
   }
 </style>

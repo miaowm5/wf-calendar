@@ -17,7 +17,7 @@
 
 </script>
 
-<p class="tag" style="background-color: {color}">{tag}</p>
+<p style="background-color: {color}">{tag}</p>
 
 <style>
   p{

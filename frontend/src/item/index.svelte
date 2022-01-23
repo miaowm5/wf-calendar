@@ -1,12 +1,14 @@
 <script>
   export let item
   // export let imagePath
+  import Progress from './progress.svelte';
   import Remain from './remain.svelte'
   import Time from './time.svelte'
   import Tag from './tag.svelte'
 </script>
 
 <div class="main">
+  <Progress remain={item.remain} timeStart={item.timeStart} timeEnd={item.timeEnd} />
   <Tag tag={item.tag} />
   <p class="title">{item.title}</p>
   <Time time={item.timeSort} />
