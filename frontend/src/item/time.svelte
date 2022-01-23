@@ -12,4 +12,7 @@
     color: #777;
     margin-right: .5em;
   }
+  @media (max-width: 460px) {
+    p{ display: none; }
+  }
 </style>

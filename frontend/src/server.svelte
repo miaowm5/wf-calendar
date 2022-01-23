@@ -17,6 +17,8 @@
     max-width: 1000px;
     margin: 0 auto;
     padding: 0 1em;
-    font-size: 16px;
+  }
+  @media (max-width: 768px) {
+    .main{ font-size: 14px; }
   }
 </style>
