@@ -3,7 +3,6 @@ const path = require('path')
 const http = require('http')
 const https = require('https')
 const fs = require('fs-extra')
-const { get: getImageDir } = require('../common/serverFlag')
 
 const download = async (url, dest)=>{
   const file = fs.createWriteStream(dest)
@@ -29,21 +28,21 @@ const getList = async (generate, target)=>{
   if (fs.existsSync(cachePath)){ cache = await fs.readJson(cachePath) }
 
   const updateList = []
-  serverList.forEach(({ server, image: images })=>{
+  serverList.forEach(({ flag, image: images })=>{
     images.forEach((image)=>{
-      if (!cache[server]){ cache[server] = {} }
-      if (!newCache[server]){ newCache[server] = {} }
+      if (!cache[flag]){ cache[flag] = {} }
+      if (!newCache[flag]){ newCache[flag] = {} }
       updateList.push({
-        server,
+        flag,
         image,
-        type: cache[server][image.id] === image.edit ? 'copy' : 'download'
+        type: cache[flag][image.id] === image.edit ? 'copy' : 'download'
       })
-      newCache[server][image.id] = image.edit
+      newCache[flag][image.id] = image.edit
     })
   })
   await fs.outputFile(cachePath, JSON.stringify(newCache))
-  await Promise.all(serverList.map(({ server })=>{
-    return fs.ensureDir(path.join(target, 'banner', getImageDir(server)))
+  await Promise.all(serverList.map(({ flag })=>{
+    return fs.ensureDir(path.join(target, 'banner', flag))
   }))
   return updateList
 }
@@ -52,7 +51,7 @@ const getList = async (generate, target)=>{
 const handleImage = async (image, target)=>{
   if (!image){ return }
   const filename = path.join(
-    getImageDir(image.server),
+    image.flag,
     `${image.image.id}.${image.image.format}`
   )
   const dest = path.join(target, 'banner', filename)

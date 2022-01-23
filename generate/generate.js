@@ -1,6 +1,5 @@
 
 const ics = require('ics')
-const { get: serverFlag } = require('../common/serverFlag')
 
 const getAlarmTime = (time)=>{
   let hours = time.getUTCHours() + 8
@@ -55,9 +54,9 @@ const create = (list, server)=>{
   })
 }
 
-const gen = async ({list, server})=>{
+const gen = async ({list, server, flag})=>{
   const value = await create(list, server)
-  return [`event-${serverFlag(server)}.ics`, value]
+  return [`event-${flag}.ics`, value]
 }
 
 module.exports = gen

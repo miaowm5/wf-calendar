@@ -7,11 +7,12 @@ const database = process.env.NOTION_DATABASE
 const loadList = async ()=>{
   const result = await notion.databases.query({ database_id: database })
   return result.results.map((item)=>{
-    const {id, server, notion} = item.properties
+    const {id, server, notion, flag} = item.properties
     return {
       server: server.title[0].plain_text,
       id: id.rich_text[0].plain_text,
       notion: notion.rich_text[0].plain_text,
+      flag: flag.rich_text[0].plain_text,
     }
   })
 }
