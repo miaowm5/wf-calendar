@@ -7,12 +7,13 @@
 <div class="main">
   <Button title={server.server} url={server.notion} />
   {#each server.list as item}
-    <Item {item} imagePath={server.flag} />
+    <Item {item} />
   {/each}
 </div>
 
 <style>
   .main {
+    font-size: 16px;
     max-width: 1000px;
     margin: 0 auto;
     padding: 0 1em;

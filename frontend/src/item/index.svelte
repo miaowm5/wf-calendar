@@ -1,6 +1,6 @@
 <script>
   export let item
-  export let imagePath
+  // export let imagePath
   import Remain from './remain.svelte'
   import Time from './time.svelte'
   import Tag from './tag.svelte'
@@ -10,7 +10,7 @@
   <Tag tag={item.tag} />
   <p class="title">{item.title}</p>
   <Time time={item.timeSort} />
-  <Remain status={item.status} remain={item.remain} time={item.timeSort} />
+  <Remain status={item.status} remain={item.remain} />
 </div>
 <!-- {#if item.image}
   <div class="img">
