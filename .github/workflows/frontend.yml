@@ -1,10 +1,12 @@
-# Build Calendar every day
+# Build Frontend when change
 
-name: Build Calendar
+name: Build Frontend
 
 on:
-  schedule:
-    - cron: "0 */12 * * *"
+  push:
+    branches: [ master ]
+    paths:
+    - 'frontend/**'
   workflow_dispatch:
 
 jobs:
@@ -18,15 +20,13 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '16'
-    - name: build calendar
-      run: npm ci && npm run generate
-      env:
-        NOTION_DATABASE: ${{ secrets.NOTION_DATABASE }}
-        NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+    - name: build frontend
+      run: npm ci && npm run build
+      working-directory: ./frontend
     - name: deploy site
       run: npm ci && npm run deploy
       env:
-        DEPLOY_TYPE: BACKEND
+        DEPLOY_TYPE: FRONTEND
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: deploy to cloudflare
       uses: wei/curl@v1

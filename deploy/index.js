@@ -11,15 +11,29 @@ const branch = 'build'
 
 // 更新内容
 const update = async (newDir)=>{
-  const generateDir = path.join(dirname, './generate')
-  // 更新日历
-  await fs.copy(path.join(generateDir, 'event-jp.ics'), path.join(newDir, 'event.ics'))
-  await fs.copy(path.join(generateDir, 'event-jp.ics'), path.join(newDir, 'event-jp.ics'))
-  await fs.copy(path.join(generateDir, 'event-ch.ics'), path.join(newDir, 'event-ch.ics'))
-  // 更新数据
-  await fs.copy(path.join(generateDir, 'data'), path.join(newDir, 'data'))
-  // 更新图片
-  await updateImage(generateDir, newDir)
+
+  // 更新前端数据
+  if (process.env.DEPLOY_TYPE === 'FRONTEND'){
+    const genDir = path.join(dirname, './frontend')
+    await Promise.all([
+      fs.copy(path.join(genDir, 'index.html'), path.join(newDir, 'index.html')),
+      fs.copy(path.join(genDir, 'assets'), path.join(newDir, 'assets')),
+    ])
+    return
+  }
+
+  // （默认）更新日历数据
+  const genDir = path.join(dirname, './generate')
+  await Promise.all([
+    // 更新日历
+    fs.copy(path.join(genDir, 'event-jp.ics'), path.join(newDir, 'event.ics')),
+    fs.copy(path.join(genDir, 'event-jp.ics'), path.join(newDir, 'event-jp.ics')),
+    fs.copy(path.join(genDir, 'event-ch.ics'), path.join(newDir, 'event-ch.ics')),
+    // 更新数据
+    fs.copy(path.join(genDir, 'data'), path.join(newDir, 'data')),
+    // 更新图片
+    updateImage(genDir, newDir)
+  ])
 }
 
 const main = async ()=>{
