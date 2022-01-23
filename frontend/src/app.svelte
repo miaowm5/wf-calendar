@@ -1,31 +1,29 @@
 <script>
-  import Button from './button.svelte'
+  import data from './store/data'
+  import Server from './server.svelte'
   import Time from './time.svelte'
-
-  let info = {}
 
   const getInfo = async ()=>{
     const res = await fetch(`/data/info.json`)
     const text = await res.text()
     if (res.ok){
-      info = JSON.parse(text)
+      data.set(JSON.parse(text))
     }else{
       console.error(text)
       throw new Error(text)
     }
   }
-  let promise = getInfo()
+  const promise = getInfo()
 
 </script>
 
 {#await promise}
   <p>读取数据日历列表中...</p>
 {:then}
-  <p>请选择要查看的日历</p>
-  {#each info.list as server}
-    <Button title="{server.server}日历" url={server.notion} />
+  {#each $data.list as server}
+    <Server server={server} />
   {/each}
-  <Time date={info.time} />
+  <Time date={$data.time} />
 {:catch}
   <p>日历列表读取失败</p>
 {/await}

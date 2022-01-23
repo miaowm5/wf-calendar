@@ -3,11 +3,11 @@
   export let title
 </script>
 
-<a href="{url}">{title}</a>
+<a href="{url}">{title} Notion 日历</a>
 
 <style>
   a{
-    margin: 1em;
+    margin: 1em 0;
     text-align: center;
     border: 1px solid #555;
     padding: 1em;
