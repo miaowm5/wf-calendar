@@ -7,6 +7,7 @@
 
 <style>
   p{
+    margin: 1em 0 2em;
     text-align: center;
     color: #999;
     font-size: .9em;

@@ -19,11 +19,12 @@
 {/if} -->
 
 <style>
-  .main {
+  .main{
+    padding: .3em .5em;
     display: flex;
-    border-bottom: 1px solid #ccc;
+    margin-bottom: 3px;
     align-items: center;
-    line-height: 1;
+    position: relative;
   }
   .title{
     flex: 1;

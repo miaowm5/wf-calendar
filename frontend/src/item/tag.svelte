@@ -21,9 +21,10 @@
 
 <style>
   p{
+    border: 1px solid #a292d9;
     padding: .3em .5em;
     border-radius: .2em;
     font-size: .9em;
-    margin-right: .3em;
+    margin-right: .5em;
   }
 </style>
