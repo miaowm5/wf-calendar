@@ -15,6 +15,7 @@ const update = async (newDir)=>{
   // 更新前端数据
   if (process.env.DEPLOY_TYPE === 'FRONTEND'){
     const genDir = path.join(dirname, './frontend')
+    await fs.remove(path.join(newDir, 'assets'))
     await Promise.all([
       fs.copy(path.join(genDir, 'index.html'), path.join(newDir, 'index.html')),
       fs.copy(path.join(genDir, 'assets'), path.join(newDir, 'assets')),
@@ -24,6 +25,7 @@ const update = async (newDir)=>{
 
   // （默认）更新日历数据
   const genDir = path.join(dirname, './generate')
+  await fs.remove(path.join(newDir, 'data'))
   await Promise.all([
     // 更新日历
     fs.copy(path.join(genDir, 'event-jp.ics'), path.join(newDir, 'event.ics')),
