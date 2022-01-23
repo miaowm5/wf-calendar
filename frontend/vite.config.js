@@ -12,7 +12,11 @@ export default defineConfig({
   server: {
     proxy: {
       '/data': { target: proxy, changeOrigin: true },
-      '/banner': { target: proxy, changeOrigin: true }
+      '/banner': {
+        target: proxy,
+        changeOrigin: true,
+        headers: { Referer: proxy },
+      }
     }
   }
 })
