@@ -21,6 +21,7 @@
 {#await promise}
   <p>读取数据日历列表中...</p>
 {:then}
+  <p>请选择要查看的日历</p>
   {#each info.list as server}
     <Button title="{server.server}日历" url={server.notion} />
   {/each}
