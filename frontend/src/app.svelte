@@ -20,7 +20,7 @@
 {#await promise}
   <p class="hint">读取数据日历列表中...</p>
 {:then}
-  {#each $data.list as server}
+  {#each $data.list as server(server.id)}
     <Server server={server} />
   {/each}
   <Time date={$data.time} />

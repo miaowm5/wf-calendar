@@ -6,7 +6,7 @@
 
 <div class="main">
   <Button title={server.server} url={server.notion} />
-  {#each server.list as item}
+  {#each server.list as item(item.id)}
     <Item {item} />
   {/each}
 </div>
