@@ -1,10 +1,11 @@
 <script>
   export let item
   export let server
+  import { slide } from 'svelte/transition'
   import Remain from './remain.svelte'
 </script>
 
-<div class="detail">
+<div class="detail" transition:slide>
   {#if item.image}
     <div
       class="img"

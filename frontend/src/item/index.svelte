@@ -1,6 +1,7 @@
 <script>
   export let item
   export let server
+  import { fade } from 'svelte/transition'
   import Progress from './progress.svelte'
   import Remain from './remain.svelte'
   import Time from './time.svelte'
@@ -19,7 +20,7 @@
     <p class="title">{item.title}</p>
   </div>
   {#if !fold}
-    <div class="time">
+    <div class="time" transition:fade>
       <Time time={item.timeSort} />
       <p class="remain"><Remain status={item.status} remain={item.remain} /></p>
     </div>
