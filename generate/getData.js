@@ -5,7 +5,10 @@ const notion = new Client({ auth: process.env.NOTION_TOKEN })
 const database = process.env.NOTION_DATABASE
 
 const loadList = async ()=>{
-  const result = await notion.databases.query({ database_id: database })
+  const result = await notion.databases.query({
+    database_id: database,
+    sorts: [{ property: 'sort', direction: 'ascending' }],
+  })
   return result.results.map((item)=>{
     const {id, server, notion, flag} = item.properties
     return {
@@ -47,13 +50,7 @@ const loadDatabse = async (item)=>{
 }
 const main = async ()=>{
   const list = await loadList()
-  const result = []
-  await Promise.all(list.map((item)=>{
-    return (async ()=>{
-      const database = await loadDatabse(item)
-      result.push(database)
-    })()
-  }))
+  const result = await Promise.all(list.map((item)=>loadDatabse(item)))
   return result
 }
 
