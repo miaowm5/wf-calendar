@@ -4,7 +4,7 @@
     活动: '#dbeddb',
     卡池: '#d3e5ef',
     限定卡池: '#d3e5ef',
-    兑换结束: '#d3e5ef',
+    兑换: '#d3e5ef',
     定期重置: '#fadec9',
     体力药过期: '#fadec9',
     停服维护: '#fadec9',
@@ -12,8 +12,8 @@
     贩售: '#e3e2e0',
   }
 
-  let color = '#a292d9'
-  $: color = colorList[tag] || '#a292d9'
+  let color = colorList['活动']
+  $: color = colorList[tag] || colorList['活动']
 
 </script>
 
