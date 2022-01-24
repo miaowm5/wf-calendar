@@ -25,9 +25,3 @@
 </script>
 
 <p>{timeStr}</p>
-
-<style>
-  p{
-    font-size: .9em;
-  }
-</style>

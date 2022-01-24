@@ -32,11 +32,11 @@
     top: 0;
     bottom: 0;
     background: rgb(49, 188, 179);
-    background: rgba(49, 188, 179, .5);
+    background: rgba(49, 188, 179, .3);
     background: linear-gradient(
       to right,
-      rgba(151, 221, 25, .5),
-      rgba(49, 188, 179, .5)
+      rgba(151, 221, 25, .3),
+      rgba(49, 188, 179, .3)
     );
     z-index: -100;
   }
