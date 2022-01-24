@@ -31,7 +31,12 @@
     left: 0;
     top: 0;
     bottom: 0;
-    background: #d2f3ff;
+    background: rgb(255, 198, 127);
+    background: linear-gradient(
+      to right,
+      rgba(255, 198, 127, .9),
+      rgba(255, 198, 127, .3)
+    );
     z-index: -100;
   }
 </style>
