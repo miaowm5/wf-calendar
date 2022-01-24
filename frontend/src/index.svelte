@@ -1,50 +1,37 @@
 <script>
-  import App from './app.svelte'
+  import './reset.css'
+  import data from './store/data'
+  import Server from './server.svelte'
+  import Time from './time.svelte'
+
+  const getInfo = async ()=>{
+    const res = await fetch(`/data/info.json`)
+    const text = await res.text()
+    if (res.ok){
+      data.set(JSON.parse(text))
+    }else{
+      console.error(text)
+      throw new Error(text)
+    }
+  }
+  const promise = getInfo()
+
 </script>
 
-<App />
+{#await promise}
+  <p class="hint">读取数据日历列表中...</p>
+{:then}
+  {#each $data.list as server(server.id)}
+    <Server server={server} />
+  {/each}
+  <Time date={$data.time} />
+{:catch}
+  <p class="hint">日历列表读取失败</p>
+{/await}
 
 <style>
-  :global(html, body, div, span, applet, object, iframe,
-  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-  a, abbr, acronym, address, big, cite, code,
-  del, dfn, em, img, ins, kbd, q, s, samp,
-  small, strike, strong, sub, sup, tt, var,
-  b, u, i, center,
-  dl, dt, dd, ol, ul, li,
-  fieldset, form, label, legend,
-  table, caption, tbody, tfoot, thead, tr, th, td,
-  article, aside, canvas, details, embed,
-  figure, figcaption, footer, header, hgroup,
-  menu, nav, output, ruby, section, summary,
-  time, mark, audio, video){
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-  }
-  :global(article, aside, details, figcaption, figure,
-  footer, header, hgroup, menu, nav, section){
-    display: block;
-  }
-  :global(body){
-    line-height: 1;
-  }
-  :global(ol, ul){
-    list-style: none;
-  }
-  :global(blockquote, q){
-    quotes: none;
-  }
-  :global(blockquote:before, blockquote:after,
-  q:before, q:after) {
-    content: '';
-    content: none;
-  }
-  :global(table){
-    border-collapse: collapse;
-    border-spacing: 0;
+  .hint{
+    text-align: center;
+    margin-top: 1em;
   }
 </style>
