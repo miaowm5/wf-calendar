@@ -1,7 +1,6 @@
 <script>
   export let item
-  // export let imagePath
-  import Progress from './progress.svelte';
+  import Progress from './progress.svelte'
   import Remain from './remain.svelte'
   import Time from './time.svelte'
   import Tag from './tag.svelte'
@@ -9,16 +8,15 @@
 
 <div class="main">
   <Progress status={item.status} remain={item.remain} timeStart={item.timeStart} timeEnd={item.timeEnd} />
-  <Tag tag={item.tag} />
-  <p class="title">{item.title}</p>
-  <Time time={item.timeSort} />
-  <Remain status={item.status} remain={item.remain} />
-</div>
-<!-- {#if item.image}
-  <div class="img">
-    <img src={`/banner/${imagePath}/${item.id}.${item.image}`} alt={item.title}>
+  <div class="name">
+    <Tag tag={item.tag} />
+    <p class="title">{item.title}</p>
   </div>
-{/if} -->
+  <div class="time">
+    <Time time={item.timeSort} />
+    <Remain status={item.status} remain={item.remain} />
+  </div>
+</div>
 
 <style>
   .main{
@@ -28,9 +26,11 @@
     align-items: center;
     position: relative;
   }
-  .title{
-    flex: 1;
+  .time, .name{ display: flex; }
+  .name{ flex: 1 }
+  .title{ line-height: 1.5em; }
+  @media (max-width: 460px){
+    .main{ display: block; }
+    .time{ margin-top: .5em; }
   }
-  /* .img{ max-width: 100%; }
-  .img>img{ max-width: 100%; } */
 </style>

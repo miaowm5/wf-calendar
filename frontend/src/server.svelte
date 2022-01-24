@@ -13,12 +13,11 @@
 
 <style>
   .main {
-    font-size: 16px;
     max-width: 1000px;
     margin: 0 auto;
     padding: 0 1em;
   }
-  @media (max-width: 768px) {
-    .main{ font-size: 14px; }
+  @media (max-width: 460px){
+    .main{ padding: 0 .5em; }
   }
 </style>
