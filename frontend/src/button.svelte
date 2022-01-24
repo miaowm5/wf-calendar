@@ -7,13 +7,13 @@
 
 <style>
   a{
+    color: white;
+    background-color: rgb(42, 42, 42);
     margin: 1em 0;
     text-align: center;
-    border: 1px solid #555;
     padding: 1em;
     display: block;
     text-decoration: none;
-    color: #333;
-    border-radius: 5px;
+    border-radius: 10px;
   }
 </style>
