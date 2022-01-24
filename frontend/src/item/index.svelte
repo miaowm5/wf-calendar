@@ -8,7 +8,7 @@
 </script>
 
 <div class="main">
-  <Progress remain={item.remain} timeStart={item.timeStart} timeEnd={item.timeEnd} />
+  <Progress status={item.status} remain={item.remain} timeStart={item.timeStart} timeEnd={item.timeEnd} />
   <Tag tag={item.tag} />
   <p class="title">{item.title}</p>
   <Time time={item.timeSort} />

@@ -1,4 +1,5 @@
 <script>
+  export let status
   export let remain
   export let timeStart
   export let timeEnd
@@ -8,6 +9,8 @@
   $:{
     if (!remain || (!timeStart && !timeEnd)){
       width = 100
+    }else if (status === 'before'){
+      width = 0
     }else{
       let distance = 0
       if (timeStart && timeEnd){
