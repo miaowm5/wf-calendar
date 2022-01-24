@@ -21,6 +21,7 @@
 {#await promise}
   <p class="hint">读取数据日历列表中...</p>
 {:then}
+  <header></header>
   {#each $data.list as server(server.id)}
     <Server server={server} />
   {/each}
@@ -30,6 +31,14 @@
 {/await}
 
 <style>
+  header{
+    background-color: rgb(221, 85, 85);
+    background-image: url(/front-assets/banner.jpg);
+    background-size: auto 120%;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 10em;
+  }
   .hint{
     text-align: center;
     margin-top: 1em;

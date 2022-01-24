@@ -15,10 +15,14 @@ const update = async (newDir)=>{
   // 更新前端数据
   if (process.env.DEPLOY_TYPE === 'FRONTEND'){
     const genDir = path.join(dirname, './frontend')
-    await fs.remove(path.join(newDir, 'assets'))
+    await Promise.all([
+      fs.remove(path.join(newDir, 'assets')),
+      fs.remove(path.join(newDir, 'front-assets')),
+    ])
     await Promise.all([
       fs.copy(path.join(genDir, 'index.html'), path.join(newDir, 'index.html')),
       fs.copy(path.join(genDir, 'assets'), path.join(newDir, 'assets')),
+      fs.copy(path.join(genDir, 'front-assets'), path.join(newDir, 'front-assets')),
     ])
     return
   }
