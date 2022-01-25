@@ -67,7 +67,10 @@
     .content{ flex: 2; }
   }
   @media (max-width: 460px){
-    .detail{ display: block; }
+    .detail{
+      display: block;
+      padding: 0;
+    }
     .img{
       margin-right: 0;
       margin-bottom: .5em;
