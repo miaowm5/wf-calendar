@@ -28,7 +28,3 @@ jobs:
       env:
         DEPLOY_TYPE: FRONTEND
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: deploy to cloudflare
-      uses: wei/curl@v1
-      with:
-        args: -X POST ${{ secrets.CLOUDFLARE_WEBHOOK }}

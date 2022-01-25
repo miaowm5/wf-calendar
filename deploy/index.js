@@ -5,6 +5,7 @@ const fs = require('fs-extra')
 const getRemoteURL = require('./remoteUrl')
 const git = require('./git')
 const updateImage = require('./updateImage')
+const cloudflare = require('./cloudflare')
 
 const dirname = path.join(__dirname, '../dist')
 const branch = 'build'
@@ -77,6 +78,9 @@ const main = async ()=>{
   const author = 'github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>'
   await git(['commit', '--author', author, '--message', 'Deploy to GitHub pages'])
   await git(['push', '--quiet', '--force', remoteURL, branch])
+
+  // 调用 Cloudflare API 更新页面
+  await cloudflare()
 }
 
 main().then(()=>{
