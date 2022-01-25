@@ -28,3 +28,4 @@ jobs:
       env:
         DEPLOY_TYPE: BACKEND
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        CLOUDFLARE_WEBHOOK: ${{ secrets.CLOUDFLARE_WEBHOOK }}
