@@ -10,8 +10,11 @@
 
   let fold = false
   const toggleFold = ()=>{ fold = !fold }
+  let width = 0
 
 </script>
+
+<svelte:window bind:outerWidth={width} />
 
 <div class="main" on:click={toggleFold}>
   <Progress status={item.status} remain={item.remain} timeStart={item.timeStart} timeEnd={item.timeEnd} />
@@ -19,7 +22,7 @@
     <Tag tag={item.tag} />
     <p class="title">{item.title}</p>
   </div>
-  {#if !fold}
+  {#if !fold || width <= 460}
     <div class="time" transition:fade>
       <Time time={item.timeSort} />
       <p class="remain"><Remain status={item.status} remain={item.remain} /></p>
