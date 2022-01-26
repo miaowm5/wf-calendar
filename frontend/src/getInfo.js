@@ -44,7 +44,7 @@ const handleServer = (info)=>{
       const sort = a.timeSort - b.timeSort
       if (sort !== 0){ return sort }
       const statusSort = { 'end': 0, 'open': 1, 'before': 2, 'progress': 3 }
-      return (statusSort[a.status] || 0) - (statusSort[b.status] || 0)
+      return (statusSort[b.status] || 0) - (statusSort[a.status] || 0)
     })
   return server
 }
