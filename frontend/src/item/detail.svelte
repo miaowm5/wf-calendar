@@ -70,6 +70,7 @@
     .detail{
       display: block;
       padding: 0;
+      margin-bottom: 1em;
     }
     .img{
       margin-right: 0;
