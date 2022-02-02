@@ -35,7 +35,13 @@ const parseData = (item)=>{
     image.edit = edit
   }
   return [
-    { title, tag, timeStart, timeEnd, edit, id: item.id, image: image.format },
+    {
+      title, tag, edit,
+      timeStart: timeStart ? timeStart.getTime() : undefined,
+      timeEnd: timeEnd ? timeEnd.getTime() : undefined,
+      id: item.id,
+      image: image.format,
+    },
     image
   ]
 }

@@ -10,7 +10,8 @@ const getAlarmTime = (time)=>{
     return hours - 8
   }
 }
-const genReminder = (title, time, server)=>{
+const genReminder = (title, timestamp, server)=>{
+  const time = new Date(timestamp)
   const timeDate = [
     time.getUTCFullYear(),
     time.getUTCMonth() + 1,
