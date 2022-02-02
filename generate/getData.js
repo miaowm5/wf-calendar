@@ -25,16 +25,17 @@ const parseData = (item)=>{
   const timeEnd = prop.Date.date ? new Date(prop.Date.date.start) : null
   const tag = prop.Tags.select.name
   const title = prop.Name.title.map((text)=>text.plain_text).join("")
+  const edit = (new Date(item.last_edited_time)).getTime()
   const image = {}
   if (prop.Image.files && prop.Image.files.length > 0){
     let files = prop.Image.files[0]
     image.id = item.id
     image.file = files.file.url
     image.format = files.name.split(".")[1]
-    image.edit = (new Date(item.last_edited_time)).getTime()
+    image.edit = edit
   }
   return [
-    { title, tag, timeStart, timeEnd, id: item.id, image: image.format },
+    { title, tag, timeStart, timeEnd, edit, id: item.id, image: image.format },
     image
   ]
 }
