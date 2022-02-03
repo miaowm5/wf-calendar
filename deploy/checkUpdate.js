@@ -34,6 +34,9 @@ const checkUpdate = async (generate, target)=>{
       }
       newEdit[item.id] = item.edit
     })
+    if (Object.keys(lastEdit).length !== Object.keys(newEdit).length){
+      update.update = true
+    }
   })
 
   if (update.update){
