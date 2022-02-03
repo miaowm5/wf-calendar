@@ -1,9 +1,7 @@
 <script>
   export let item
   export let server
-  import { fade } from 'svelte/transition'
   import Progress from './progress.svelte'
-  import Remain from './remain.svelte'
   import Time from './time.svelte'
   import Tag from './tag.svelte'
   import Detail from "./detail.svelte"
@@ -23,10 +21,7 @@
     <p class="title">{item.title}</p>
   </div>
   {#if !fold || width <= 460}
-    <div class="time" transition:fade>
-      <Time time={item.timeSort} />
-      <p class="remain"><Remain status={item.status} remain={item.remain} /></p>
-    </div>
+    <Time time={item.timeSort} status={item.status} remain={item.remain} />
   {/if}
 </div>
 {#if fold}<Detail item={item} server={server} />{/if}
@@ -40,12 +35,9 @@
     position: relative;
     cursor: pointer;
   }
-  .time, .name{ display: flex; }
-  .name{ flex: 1 }
+  .name{ display: flex; flex: 1; }
   .title{ line-height: 1.5em; }
-  .remain{ font-size: .9em; }
   @media (max-width: 460px){
     .main{ display: block; }
-    .time{ margin-top: .5em; }
   }
 </style>

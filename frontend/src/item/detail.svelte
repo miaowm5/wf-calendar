@@ -5,7 +5,7 @@
   import Remain from './remain.svelte'
 </script>
 
-<div class="detail" transition:slide>
+<div class="detail" transition:slide|local>
   {#if item.image}
     <div
       class="img"
