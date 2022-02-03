@@ -4,6 +4,7 @@ const path = require('path')
 const fs = require('fs-extra')
 const getRemoteURL = require('./remoteUrl')
 const git = require('./git')
+const checkUpdate = require('./checkUpdate')
 const updateImage = require('./updateImage')
 const cloudflare = require('./cloudflare')
 
@@ -30,6 +31,7 @@ const update = async (newDir)=>{
 
   // （默认）更新日历数据
   const genDir = path.join(dirname, './generate')
+  const updateInfo = await checkUpdate(genDir, newDir)
   await fs.remove(path.join(newDir, 'data'))
   await Promise.all([
     // 更新日历
@@ -39,7 +41,7 @@ const update = async (newDir)=>{
     // 更新数据
     fs.copy(path.join(genDir, 'data'), path.join(newDir, 'data')),
     // 更新图片
-    updateImage(genDir, newDir)
+    updateImage(updateInfo, genDir, newDir)
   ])
 }
 

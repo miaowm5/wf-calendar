@@ -32,7 +32,6 @@ const parseData = (item)=>{
     image.id = item.id
     image.file = files.file.url
     image.format = files.name.split(".")[1]
-    image.edit = edit
   }
   return [
     {
