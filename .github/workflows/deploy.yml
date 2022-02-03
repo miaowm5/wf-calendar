@@ -6,6 +6,11 @@ on:
   schedule:
     - cron: "0 */12 * * *"
   workflow_dispatch:
+    inputs:
+      force:
+        description: 'Force update build result'
+        required: true
+        default: 'false'
 
 jobs:
   build:
@@ -28,4 +33,5 @@ jobs:
       env:
         DEPLOY_TYPE: BACKEND
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DEPLOY_FORCE_UPDATE: ${{ github.event.inputs.force }}
         CLOUDFLARE_WEBHOOK: ${{ secrets.CLOUDFLARE_WEBHOOK }}

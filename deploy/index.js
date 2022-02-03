@@ -26,12 +26,18 @@ const update = async (newDir)=>{
       fs.copy(path.join(genDir, 'assets'), path.join(newDir, 'assets')),
       fs.copy(path.join(genDir, 'front-assets'), path.join(newDir, 'front-assets')),
     ])
-    return
+    return true
   }
 
   // （默认）更新日历数据
   const genDir = path.join(dirname, './generate')
   const updateInfo = await checkUpdate(genDir, newDir)
+
+  if (!updateInfo.update && process.env.DEPLOY_FORCE_UPDATE !== 'true'){
+    console.log('Everything up to date')
+    return false
+  }
+
   await fs.remove(path.join(newDir, 'data'))
   await Promise.all([
     // 更新日历
@@ -43,6 +49,7 @@ const update = async (newDir)=>{
     // 更新图片
     updateImage(updateInfo, genDir, newDir)
   ])
+  return true
 }
 
 const main = async ()=>{
@@ -70,7 +77,8 @@ const main = async ()=>{
   await fs.copy(oldDir, newDir)
 
   // 根据本次的生成结果更新 newDir
-  await update(newDir)
+  const needUpdate = await update(newDir)
+  if (!needUpdate){ return }
 
   // 将 newDir 的内容强制推送到目标分支
   process.chdir(newDir)
