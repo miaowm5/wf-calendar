@@ -1,15 +1,15 @@
 <script>
   export let tag
   const colorList = {
-    活动: '#ec0004',
-    卡池: '#00a1fd',
-    限定卡池: '#00a1fd',
-    兑换: '#00a1fd',
-    定期重置: '#7e03ba',
-    体力药过期: '#7e03ba',
-    停服维护: '#7e03ba',
-    运营活动: '#7e03ba',
-    贩售: '#f9c800',
+    活动: 'rgba(236, 0, 4, .7)',
+    卡池: 'rgba(0, 161, 253, .7)',
+    限定卡池: 'rgba(0, 161, 253, .7)',
+    兑换: 'rgba(0, 161, 253, .7)',
+    定期重置: 'rgba(126, 3, 186, .7)',
+    体力药过期: 'rgba(126, 3, 186, .7)',
+    停服维护: 'rgba(126, 3, 186, .7)',
+    运营活动: 'rgba(126, 3, 186, .7)',
+    贩售: 'rgba(249, 200, 0, .7)',
   }
 
   let color = colorList['活动']
@@ -21,6 +21,7 @@
 
 <style>
   p{
+    background-color: grey;
     font-weight: bold;
     padding: .3em .5em;
     border-radius: .2em;
