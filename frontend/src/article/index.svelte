@@ -43,9 +43,4 @@
   .content{
     line-height: 2em;
   }
-  .content a{
-    color: #777;
-    text-decoration-style: dotted;
-    text-decoration-color: #999;
-  }
 </style>
