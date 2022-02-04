@@ -2,7 +2,6 @@
   import './reset.css'
   import Nav from './nav.svelte'
   import Server from './server.svelte'
-  import Time from './time.svelte'
   import getInfo from './getInfo'
 
   let data = {}
@@ -23,7 +22,7 @@
   <div class="main">
     <Nav list={data.list} current={selectServer} change={(index)=>selectServer = index} />
     {#key selectServer}<Server server={data.list[selectServer]} />{/key}
-    <Time date={data.time} />
+    <p class="time">日历更新时间：{new Date(data.time).toLocaleString()}</p>
   </div>
 {:catch}
   <p class="hint">日历列表读取失败</p>
@@ -46,6 +45,12 @@
     max-width: 800px;
     margin: 0 auto;
     padding: 0 1em;
+  }
+  .time{
+    margin: 2em 0;
+    text-align: center;
+    color: #999;
+    font-size: .9em;
   }
   @media (max-width: 460px){
     .main{ padding: 0 .5em; }
