@@ -13,7 +13,6 @@
 <style>
   a{
     color: #777;
-    text-decoration-style: dotted;
-    text-decoration-color: #999;
+    text-decoration: none;
   }
 </style>
