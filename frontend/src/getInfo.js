@@ -46,6 +46,18 @@ const handleServer = (info)=>{
       const statusSort = { 'end': 0, 'open': 1, 'before': 2, 'progress': 3 }
       return (statusSort[b.status] || 0) - (statusSort[a.status] || 0)
     })
+  // 活动分组:
+  // 0-已结束, 1-24小时内, 2-本周, 3-30天内, 4-其他
+  server.group = [[],[],[],[],[]]
+  server.list.forEach((info)=>{
+    let index = 0
+    if (info.status === 'end' || info.status === 'open'){ index = 0 }
+    else if (info.remain < 86400){ index = 1 }
+    else if (info.remain < 86400 * 7){ index = 2 }
+    else if (info.remain < 86400 * 30){ index = 3 }
+    else{ index = 4 }
+    server.group[index].push(info)
+  })
   return server
 }
 

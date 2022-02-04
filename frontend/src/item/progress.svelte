@@ -31,7 +31,7 @@
     left: 0;
     top: 0;
     bottom: 0;
-    background: rgb(187, 229, 226);
+    background: #ffe5c4;
     z-index: -100;
   }
 </style>

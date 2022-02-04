@@ -1,43 +1,47 @@
 <script>
-  export let item
-  export let server
-  import Progress from './progress.svelte'
-  import Time from './time.svelte'
-  import Tag from './tag.svelte'
-  import Detail from "./detail.svelte"
+  export let list
+  export let flag
+  export let type
+  import Item from './item.svelte'
 
-  let fold = false
-  const toggleFold = ()=>{ fold = !fold }
-  let width = 0
+  let title = {
+    "0": "已开始/结束",
+    "1": "24小时内",
+    "2": "7天内",
+    "3": "30天内",
+    "4": "更远",
+  }[type]
 
 </script>
 
-<svelte:window bind:outerWidth={width} />
-
-<div class="main" on:click={toggleFold}>
-  <Progress status={item.status} remain={item.remain} timeStart={item.timeStart} timeEnd={item.timeEnd} />
-  <div class="name">
-    <Tag tag={item.tag} />
-    <p class="title">{item.title}</p>
+{#if list.length > 0}
+  <div class="main">
+    <header class="header">
+      <p>{title}</p>
+      <p>{list.length}</p>
+    </header>
+    {#each list as item(item.id)}
+      <Item {item} server={flag} />
+    {/each}
   </div>
-  {#if !fold || width <= 460}
-    <Time time={item.timeSort} status={item.status} remain={item.remain} />
-  {/if}
-</div>
-{#if fold}<Detail item={item} server={server} />{/if}
+{/if}
 
 <style>
   .main{
-    padding: .3em .5em;
-    display: flex;
-    margin-bottom: 5px;
-    align-items: center;
-    position: relative;
-    cursor: pointer;
+    border-bottom: 1px solid #ccc;
+    padding: .5em 0 .8em;
   }
-  .name{ display: flex; flex: 1; }
-  .title{ line-height: 1.5em; }
-  @media (max-width: 460px){
-    .main{ display: block; }
+  .header{
+    display: flex;
+    margin: .5em .5em 1em;
+  }
+  .header>p:nth-child(1){
+    font-weight: bold;
+  }
+  .header>p:nth-child(2){
+    color: #999;
+    font-size: .9em;
+    margin-left: .5em;
+    line-height: 1.3em;
   }
 </style>

@@ -1,31 +1,13 @@
 <script>
   export let server
-  import Item from './item/index.svelte'
+  import List from './item/index.svelte'
   import Article from './article/index.svelte'
 </script>
 
-<Article data={server.header.content} server={server.flag} />
-<a class="button" href="{server.notion}" target="_blank">Notion 日历</a>
-<div class="list">
-  {#each server.list as item(item.id)}
-    <Item {item} server={server.flag} />
-  {/each}
-</div>
-<Article data={server.footer.content} server={server.flag} />
-
-<style>
-  .button{
-    font-size: .9em;
-    color: white;
-    background-color: rgb(42, 42, 42);
-    margin: 1em 0;
-    text-align: center;
-    padding: .8em;
-    display: block;
-    text-decoration: none;
-    border-radius: 5px;
-  }
-  .list{
-    margin: 1em 0;
-  }
-</style>
+<Article server={server}>
+  <List list={server.group[0]} flag={server.flag} type="0" />
+  <List list={server.group[1]} flag={server.flag} type="1" />
+  <List list={server.group[2]} flag={server.flag} type="2" />
+  <List list={server.group[3]} flag={server.flag} type="3" />
+  <List list={server.group[4]} flag={server.flag} type="4" />
+</Article>
