@@ -32,6 +32,7 @@
   .detail{
     display: flex;
     padding: .5em;
+    margin-bottom: 1em;
   }
   .img, .content{
     flex: 1;
@@ -70,7 +71,6 @@
     .detail{
       display: block;
       padding: 0;
-      margin-bottom: 1em;
     }
     .img{
       margin-right: 0;
