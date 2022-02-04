@@ -11,36 +11,39 @@ const loadCache = async (cachePath)=>{
 // 比较数据相比上一次部署是否更新
 const checkUpdate = async (generate, target)=>{
   const update = {
-    list: { item: {} },
-    cache: { item: {} },
+    list: {},
+    cache: {},
     update: false
   }
   const server = await fs.readJson(path.join(generate, 'deploy/info.json'))
   const cachePath = path.join(target, '_cache.json')
   const cache = await loadCache(cachePath)
 
-  server.forEach(({ flag, list })=>{
+  server.forEach(({ flag, list, header, footer })=>{
     const updateList = {}
     const lastEdit = cache[flag] || {}
     const newEdit = {}
 
-    update.list.item[flag] = updateList
-    update.cache.item[flag] = newEdit
+    update.list[flag] = updateList
+    update.cache[flag] = newEdit
 
-    list.forEach((item)=>{
-      if (lastEdit[item.id] !== item.edit){
-        updateList[item.id] = true
+    const check = (id, edit)=>{
+      if (lastEdit[id] !== edit){
+        updateList[id] = true
         update.update = true
       }
-      newEdit[item.id] = item.edit
-    })
+      newEdit[id] = edit
+    }
+    list.forEach((item)=>check(item.id, item.edit))
+    check('header', header.edit)
+    check('footer', footer.edit)
     if (Object.keys(lastEdit).length !== Object.keys(newEdit).length){
       update.update = true
     }
   })
 
   if (update.update){
-    await fs.outputFile(cachePath, JSON.stringify(update.cache.item))
+    await fs.outputFile(cachePath, JSON.stringify(update.cache))
   }
 
   return update

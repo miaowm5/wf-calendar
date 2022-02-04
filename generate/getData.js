@@ -4,20 +4,63 @@ const { Client } = require("@notionhq/client")
 const notion = new Client({ auth: process.env.NOTION_TOKEN })
 const database = process.env.NOTION_DATABASE
 
+const getBlock = async (id)=>{
+  let page = await notion.blocks.retrieve({ block_id: id })
+  let edit = new Date(page.last_edited_time)
+  if (page.has_children){
+    page = await notion.blocks.children.list({ block_id: page.id, page_size: 50 })
+  }
+  const content = []
+  const image = []
+  const list = page.object === 'list' ? page.results : [page]
+  list.forEach((item)=>{
+    let itemEdit = new Date(item.last_edited_time)
+    if (itemEdit > edit){ edit = itemEdit }
+    if (item.type === "image"){
+      let file = item.image.file.url
+      let format = file.split("?")[0].split(".")
+      format = format[format.length - 1]
+      image.push({ file, format, id: item.id })
+      content.push({ type: "image", format, id: item.id })
+    }
+  })
+  return {
+    image,
+    data: { content, edit: edit.getTime() },
+  }
+}
 const loadList = async ()=>{
   const result = await notion.databases.query({
     database_id: database,
     sorts: [{ property: 'sort', direction: 'ascending' }],
   })
-  return result.results.map((item)=>{
-    const {id, server, notion, flag} = item.properties
-    return {
-      server: server.title[0].plain_text,
-      id: id.rich_text[0].plain_text,
-      notion: notion.rich_text[0].plain_text,
-      flag: flag.rich_text[0].plain_text,
-    }
-  })
+  const list = await Promise.all(result.results.map((item)=>{
+    return (async ()=>{
+      const {
+        id, server, flag,
+        notion: url,
+        header: headerID,
+        footer: footerID
+      } = item.properties
+      const [header, footer] = await Promise.all([
+        getBlock(headerID.rich_text[0].plain_text),
+        getBlock(footerID.rich_text[0].plain_text),
+      ])
+      return {
+        header: header.data,
+        footer: footer.data,
+        server: server.title[0].plain_text,
+        id: id.rich_text[0].plain_text,
+        notion: url.rich_text[0].plain_text,
+        flag: flag.rich_text[0].plain_text,
+        image: [
+          ...header.image,
+          ...footer.image,
+        ]
+      }
+    })()
+  }))
+  return list
 }
 const parseData = (item)=>{
   const prop = item.properties
@@ -44,15 +87,15 @@ const parseData = (item)=>{
     image
   ]
 }
-const loadDatabse = async (item)=>{
-  const result = await notion.databases.query({ database_id: item.id })
-  const image = []
+const loadDatabse = async (server)=>{
+  const result = await notion.databases.query({ database_id: server.id })
+  const image = server.image
   const list = result.results.map((item)=>{
     const [itemData, itemImage] = parseData(item)
     if (itemData.image){ image.push(itemImage) }
     return itemData
   })
-  return { ...item, list, image }
+  return { ...server, list, image }
 }
 const main = async ()=>{
   const list = await loadList()

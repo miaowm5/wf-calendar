@@ -22,8 +22,15 @@ const getList = async (updateInfo, generate, target)=>{
   const infoPath = path.join(generate, 'deploy/info.json')
   const server = await fs.readJson(infoPath)
   const updateList = []
-  server.forEach(({ flag, image: images })=>{
-    const update = updateInfo.list.item[flag]
+  server.forEach(({ flag, image: images, header, footer })=>{
+    const update = { ...updateInfo.list[flag] }
+    const updateContent = (data)=>{
+      data.content.forEach((item)=>{
+        if (item.type === 'image'){ update[item.id] = true }
+      })
+    }
+    update.header && updateContent(header)
+    update.footer && updateContent(footer)
     images.forEach(({ id, file, format })=>{
       updateList.push({
         file,
