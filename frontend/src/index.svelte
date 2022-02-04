@@ -47,7 +47,7 @@
     padding: 0 1em;
   }
   .time{
-    margin: 2em 0;
+    margin: 4em 0 3em;
     text-align: center;
     color: #999;
     font-size: .9em;
