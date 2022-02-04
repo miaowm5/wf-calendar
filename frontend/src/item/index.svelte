@@ -16,10 +16,7 @@
 
 {#if list.length > 0}
   <div class="main">
-    <header class="header">
-      <p>{title}</p>
-      <p>{list.length}</p>
-    </header>
+    <header class="header">{title}</header>
     {#each list as item(item.id)}
       <Item {item} server={flag} />
     {/each}
@@ -34,14 +31,6 @@
   .header{
     display: flex;
     margin: .5em .5em 1em;
-  }
-  .header>p:nth-child(1){
     font-weight: bold;
-  }
-  .header>p:nth-child(2){
-    color: #999;
-    font-size: .9em;
-    margin-left: .5em;
-    line-height: 1.3em;
   }
 </style>

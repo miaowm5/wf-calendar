@@ -28,7 +28,7 @@
     border-radius: 5px;
     background-color: rgb(246, 246, 246);
     margin-right: .5em;
-    box-shadow: 0 0 10px rgb(183, 185, 186);
+    box-shadow: 0 0 8px rgb(183, 185, 186);
     cursor: pointer;
   }
   div.active{

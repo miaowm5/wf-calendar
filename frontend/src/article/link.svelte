@@ -14,5 +14,6 @@
   a{
     color: #777;
     text-decoration: none;
+    word-break: break-all;
   }
 </style>
