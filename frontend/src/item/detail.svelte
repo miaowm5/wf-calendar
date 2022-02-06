@@ -9,7 +9,7 @@
   {#if item.image}
     <div
       class="img"
-      style="background-image: url({`/banner/${server}/${item.id}.${item.image}`})">
+      style="background-image: url({`/banner/${server}/${item.id}.${item.image}?${item.edit}`})">
     </div>
   {/if}
   <div class="content">

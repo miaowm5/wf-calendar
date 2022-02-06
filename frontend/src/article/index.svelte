@@ -5,12 +5,12 @@
   import Link from './link.svelte'
 </script>
 
-<Header data={server.header.content} server={server.flag} />
+<Header data={server.header} server={server.flag} />
 <Title text="活动一览" />
 <div class="list">
   <slot></slot>
 </div>
-<Header data={server.footer.content} server={server.flag} />
+<Header data={server.footer} server={server.flag} />
 <Title text="手机订阅" />
 <div class="content">
   <p>使用以下地址将活动日程订阅到手机日历中</p>

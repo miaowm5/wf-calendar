@@ -3,10 +3,10 @@
   export let server
 </script>
 
-{#each data as item}
+{#each data.content as item}
   {#if item.type === 'image'}
     <div class="image">
-      <img src="/banner/{server}/{item.id}.{item.format}" alt="banner">
+      <img src="/banner/{server}/{item.id}.{item.format}?{data.edit}" alt="banner">
     </div>
   {/if}
 {/each}

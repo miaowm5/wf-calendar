@@ -1,7 +1,7 @@
 <script>
   export let url
-  export let prefix
-  export let desc
+  export let prefix = ''
+  export let desc = ''
 </script>
 
 <p>
