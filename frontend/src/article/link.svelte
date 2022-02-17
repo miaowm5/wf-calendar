@@ -2,10 +2,11 @@
   export let url
   export let prefix = ''
   export let desc = ''
+  export let media = 'text/html'
 </script>
 
 <p>
-  {prefix || ''}<a href="{url}" target="_blank">
+  {prefix || ''}<a href="{url}" target="_blank" type={media}>
     {desc || url}
   </a>
 </p>
