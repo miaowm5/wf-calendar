@@ -23,6 +23,7 @@ const update = async (newDir)=>{
     ])
     await Promise.all([
       fs.copy(path.join(genDir, 'index.html'), path.join(newDir, 'index.html')),
+      fs.copy(path.join(genDir, '_headers'), path.join(newDir, '_headers')),
       fs.copy(path.join(genDir, 'assets'), path.join(newDir, 'assets')),
       fs.copy(path.join(genDir, 'front-assets'), path.join(newDir, 'front-assets')),
     ])

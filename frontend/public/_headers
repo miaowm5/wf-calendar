@@ -1,0 +1,5 @@
+/data/*
+  Access-Control-Allow-Origin: *
+
+/banner/*
+  Access-Control-Allow-Origin: *
