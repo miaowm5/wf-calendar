@@ -21,7 +21,11 @@
 <div class="content">
   <Link url="https://nga.178.com/read.php?tid=28982479" prefix="NGA：" />
   <Link url="https://github.com/miaowm5/wf-calendar" prefix="Github：" />
-  <p>台服、国际服、国服日历维护者募集中</p>
+  {#if server.flag === 'ch'}
+    <Link url="https://ngabbs.com/nuke.php?func=ucp&uid=60999453" prefix="国服维护协力：" desc="御坂葉子" />
+  {:else}
+    <p>台服、国际服日历维护者募集中</p>
+  {/if}
 </div>
 <Title text="相关链接" />
 <div class="content">
