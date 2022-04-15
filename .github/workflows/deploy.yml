@@ -4,7 +4,7 @@ name: Build Calendar
 
 on:
   schedule:
-    - cron: "0 */12 * * *"
+    - cron: "0 5,11,16 * * *"
   workflow_dispatch:
     inputs:
       force:
