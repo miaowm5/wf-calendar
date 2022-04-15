@@ -8,7 +8,7 @@ const download = async (url, dest)=>{
   const file = fs.createWriteStream(dest)
   await new Promise((success, fail)=>{
     const proto = url.startsWith('https:') ? https : http
-    proto.get(url, (response)=>{
+    proto.get(url, {headers: { 'Cache-Control': 'no-cache' }}, (response)=>{
       response.pipe(file)
       file.on('finish', ()=>{ file.close(success) })
     }).on('error', (err)=>{
