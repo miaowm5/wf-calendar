@@ -36,6 +36,7 @@
   {#if server.flag === 'ch'}
     <Link url="https://weibo.com/u/7541735234" prefix="官方微博：" />
     <Link url="https://space.bilibili.com/1365027097/dynamic" prefix="官方B站：" />
+    <Link url="https://www.taptap.com/app/218693/topic?type=official" prefix="官方TapTap：" />
   {/if}
   <Link url={server.notion} prefix="Notion 日历：" />
 </div>
