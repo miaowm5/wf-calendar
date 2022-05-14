@@ -1,7 +1,7 @@
 <script>
   import './reset.css'
   import Nav from './nav.svelte'
-  import Server from './server.svelte'
+  import Article from './article/index.svelte'
   import getInfo from './getInfo'
 
   let data = {}
@@ -20,7 +20,7 @@
     <p class="hint">读取日历数据中...</p>
   {:then}
     <Nav list={data.list} current={selectServer} change={(index)=>selectServer = index} />
-    {#key selectServer}<Server server={data.list[selectServer]} />{/key}
+    {#key selectServer}<Article server={data.list[selectServer]} />{/key}
     <p class="time">日历更新时间：{new Date(data.time).toLocaleString()}</p>
   {:catch}
     <p class="hint">日历数据读取失败</p>
