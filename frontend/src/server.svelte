@@ -1,6 +1,6 @@
 <script>
   export let server
-  import List from './item/index.svelte'
+  import List from './list/index.svelte'
   import Article from './article/index.svelte'
 </script>
 
