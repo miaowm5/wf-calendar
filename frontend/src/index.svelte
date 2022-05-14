@@ -16,7 +16,7 @@
 </script>
 
 {#await promise}
-  <p class="hint">读取数据日历列表中...</p>
+  <p class="hint">读取日历列表中...</p>
 {:then}
   <header />
   <div class="main">
