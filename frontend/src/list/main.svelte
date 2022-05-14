@@ -16,12 +16,12 @@
 
 <style>
   .main{
-    border-bottom: 1px solid #ccc;
-    padding: .5em 0 .8em;
+    padding: .5em 0 0;
   }
   .header{
-    display: flex;
-    margin: .5em .5em 1em;
+    padding: .7em .5em .5em;
+    margin-bottom: .7em;
     font-weight: bold;
+    border-bottom: 1px solid #ccc;
   }
 </style>
