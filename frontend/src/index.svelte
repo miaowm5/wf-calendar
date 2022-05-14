@@ -12,21 +12,20 @@
     data = result
   }
   promise = load()
-
 </script>
 
-{#await promise}
-  <p class="hint">读取日历列表中...</p>
-{:then}
-  <header />
-  <div class="main">
+<header />
+<div class="main">
+  {#await promise}
+    <p class="hint">读取日历数据中...</p>
+  {:then}
     <Nav list={data.list} current={selectServer} change={(index)=>selectServer = index} />
     {#key selectServer}<Server server={data.list[selectServer]} />{/key}
     <p class="time">日历更新时间：{new Date(data.time).toLocaleString()}</p>
-  </div>
-{:catch}
-  <p class="hint">日历列表读取失败</p>
-{/await}
+  {:catch}
+    <p class="hint">日历数据读取失败</p>
+  {/await}
+</div>
 
 <style>
   header{
@@ -39,7 +38,7 @@
   }
   .hint{
     text-align: center;
-    margin-top: 1em;
+    margin-top: 2em;
   }
   .main {
     max-width: 800px;
