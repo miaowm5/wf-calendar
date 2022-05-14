@@ -1,14 +1,18 @@
 <script>
   export let server
+  export let forecast = false
   import Main from './main.svelte'
+
+  const title = ["已开始/结束", "24小时内", "7天内", "30天内", "更远"]
+  const filterList = server.group.map((list)=>{
+    return list.filter((item)=>item.tag === '千里眼' ? forecast : !forecast)
+  })
 </script>
 
 <div class="list">
-  <Main list={server.group[0]} flag={server.flag} title="已开始/结束" />
-  <Main list={server.group[1]} flag={server.flag} title="24小时内" />
-  <Main list={server.group[2]} flag={server.flag} title="7天内" />
-  <Main list={server.group[3]} flag={server.flag} title="30天内" />
-  <Main list={server.group[4]} flag={server.flag} title="更远" />
+  {#each filterList as list, index}
+    <Main list={list} flag={server.flag} title={title[index] || ''} />
+  {/each}
 </div>
 
 <style>

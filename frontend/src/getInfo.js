@@ -37,7 +37,7 @@ const handleItem = (info)=>{
 }
 
 const handleServer = (info)=>{
-  const server = { ...info }
+  const server = { ...info, forecast: false }
   server.list = server.list
     .map((info)=>handleItem(info))
     .sort((a, b)=>{
@@ -50,6 +50,7 @@ const handleServer = (info)=>{
   // 0-已结束, 1-24小时内, 2-本周, 3-30天内, 4-其他
   server.group = [[],[],[],[],[]]
   server.list.forEach((info)=>{
+    if (info.tag === '千里眼'){ server.forecast = true }
     let index = 0
     if (info.status === 'end' || info.status === 'open'){ index = 0 }
     else if (info.remain < 86400){ index = 1 }
