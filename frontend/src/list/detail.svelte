@@ -10,6 +10,7 @@
     <div
       class="img"
       style="background-image: url({`/banner/${server}/${item.id}.${item.image}?${item.edit}`})">
+      <img src={`/banner/${server}/${item.id}.${item.image}?${item.edit}`} alt={item.title} />
     </div>
   {/if}
   <div class="content">
@@ -36,6 +37,15 @@
   }
   .img, .content{
     flex: 1;
+  }
+  .img>img{ display: none; }
+  @supports (object-fit: cover){
+    .img>img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: inline;
+    }
   }
   .img{
     background: #ccc;
