@@ -1,11 +1,9 @@
 <script>
   import './reset.css'
-  import Nav from './nav.svelte'
   import Article from './article/index.svelte'
   import getInfo from './getInfo'
 
   let data = {}
-  let selectServer = 0
   let promise
   const load = async ()=>{
     const result = await getInfo()
@@ -19,9 +17,7 @@
   {#await promise}
     <p class="hint">读取日历数据中...</p>
   {:then}
-    <Nav list={data.list} current={selectServer} change={(index)=>selectServer = index} />
-    {#key selectServer}<Article server={data.list[selectServer]} />{/key}
-    <p class="time">日历更新时间：{new Date(data.time).toLocaleString()}</p>
+    <Article data={data} />
   {:catch}
     <p class="hint">日历数据读取失败</p>
   {/await}
@@ -44,12 +40,6 @@
     max-width: 800px;
     margin: 0 auto;
     padding: 0 1em;
-  }
-  .time{
-    margin: 4em 0 3em;
-    text-align: center;
-    color: #999;
-    font-size: .9em;
   }
   @media (max-width: 460px){
     .main{ padding: 0 .5em; }
