@@ -1,19 +1,20 @@
 <script>
   import './reset.css'
   import Article from './article/index.svelte'
+  import Manual from './manual/index.svelte'
   import getInfo from './getInfo'
 
   let data = {}
   let promise
-  const load = async ()=>{
-    const result = await getInfo()
-    data = result
-  }
+  const load = async ()=>{ data = await getInfo() }
   promise = load()
 </script>
 
 <header />
 <div class="main">
+{#if document.location.pathname === '/manual'}
+  <Manual />
+{:else}
   {#await promise}
     <p class="hint">读取日历数据中...</p>
   {:then}
@@ -21,6 +22,7 @@
   {:catch}
     <p class="hint">日历数据读取失败</p>
   {/await}
+{/if}
 </div>
 
 <style>

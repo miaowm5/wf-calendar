@@ -8,7 +8,7 @@
 <div class="content">
   <p>使用以下地址将活动日程订阅到手机日历中</p>
   <Link url="https://wf-calendar.miaowm5.com/event-{server.flag}.ics" media="text/calendar" />
-  <Link url="https://miaowm5.notion.site/59cdd0e2d8a14e3f910fed68d9270f12" desc="订阅教程" />
+  <Link url="/manual" desc="订阅教程" />
 </div>
 <Title text="意见反馈" />
 <div class="content">
