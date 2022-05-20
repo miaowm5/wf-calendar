@@ -11,7 +11,9 @@
 
 <div class="list">
   {#each filterList as list, index}
-    <Main list={list} flag={server.flag} title={title[index] || ''} />
+    {#if index !== 0}
+      <Main list={list} flag={server.flag} title={title[index] || ''} />
+    {/if}
   {/each}
 </div>
 
