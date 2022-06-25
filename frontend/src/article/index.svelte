@@ -7,12 +7,17 @@
   import Footer from './footer.svelte'
   const list = data.list
   let selectServer = 0
+  if (localStorage.getItem('selectServer')){
+    selectServer = parseInt(localStorage.getItem('selectServer')) - 0 || 0
+  }
+  if (!list[selectServer]){ selectServer = 0 }
   let server = list[selectServer]
 </script>
 
 <Nav list={list} current={selectServer} change={(index)=>{
   selectServer = index
   server = list[selectServer]
+  localStorage.setItem('selectServer', index)
 }} />
 {#key selectServer}
   <Page data={server.header} server={server.flag} />
