@@ -55,7 +55,7 @@ const create = (list, server)=>{
     })
   })
 }
-
+// 生成ICS格式的日历文件
 const gen = async ({list, server, flag})=>{
   const value = await create(list, server)
   return [`event-${flag}.ics`, value]

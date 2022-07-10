@@ -1,4 +1,5 @@
 
+// 生成供发布使用的数据
 const gen = async (serverList)=>{
   const list = serverList.map((serverData)=>({ ...serverData, image: undefined }))
   const info = {
