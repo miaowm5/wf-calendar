@@ -9,7 +9,6 @@ const saveInfo = require('./saveInfo')
 const dist = path.join(__dirname, '../dist/generate')
 
 const main = async ()=>{
-  await fs.ensureDir(dist)
   await fs.emptyDir(dist)
   const list = await getData()
   let fileList = await Promise.all([

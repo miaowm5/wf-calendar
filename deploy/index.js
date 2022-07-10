@@ -7,6 +7,8 @@ const git = require('./git')
 const checkUpdate = require('./checkUpdate')
 const updateImage = require('./updateImage')
 const cloudflare = require('./cloudflare')
+const fetchOrigin = require('./fetchOrigin')
+const createNew = require('./createNew')
 
 const dirname = path.join(__dirname, '../dist')
 const branch = 'build'
@@ -54,25 +56,10 @@ const update = async (newDir)=>{
 }
 
 const main = async ()=>{
-  await fs.ensureDir(path.join(dirname, './deploy'))
-  await fs.emptyDir(path.join(dirname, './deploy'))
-
-  const oldDir = path.join(dirname, './deploy/old')
-  const newDir = path.join(dirname, './deploy/new')
-  await fs.ensureDir(oldDir)
-  await fs.ensureDir(newDir)
-
-  const remoteURL = getRemoteURL()
-
-  // 将当前的分支内容拉取到 oldDir
-  process.chdir(oldDir)
-  await git(['clone', remoteURL, '-b', branch, '--single-branch', '--depth=1', '.'])
-  await fs.remove(path.join(oldDir, '.git'))
-
-  // 创建一个空的分支到 newDir
-  process.chdir(newDir)
-  await git(['init'])
-  await git(['checkout', '--orphan', branch])
+  const deployDir = path.join(dirname, './deploy')
+  await fs.emptyDir(deployDir)
+  const oldDir = await fetchOrigin(deployDir, branch)
+  const newDir = await createNew(deployDir, branch)
 
   // 将上一次的提交结果拷贝到 newDir
   await fs.copy(oldDir, newDir)
@@ -88,7 +75,7 @@ const main = async ()=>{
   await git(['add', '--all', '.'])
   const author = 'github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>'
   await git(['commit', '--author', author, '--message', 'Deploy to GitHub pages'])
-  await git(['push', '--quiet', '--force', remoteURL, branch])
+  await git(['push', '--quiet', '--force', getRemoteURL(), branch])
 
   // 调用 Cloudflare API 更新页面
   await cloudflare()
