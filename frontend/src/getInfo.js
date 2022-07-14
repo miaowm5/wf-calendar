@@ -1,4 +1,6 @@
 
+import { getSort } from "./tagInfo"
+
 const handleItem = (info)=>{
   const today = new Date()
   const event = { ...info }
@@ -41,10 +43,12 @@ const handleServer = (info)=>{
   server.list = server.list
     .map((info)=>handleItem(info))
     .sort((a, b)=>{
-      const sort = a.timeSort - b.timeSort
+      let sort = a.timeSort - b.timeSort
       if (sort !== 0){ return sort }
       const statusSort = { 'end': 0, 'open': 1, 'before': 2, 'progress': 3 }
-      return (statusSort[b.status] || 0) - (statusSort[a.status] || 0)
+      sort = (statusSort[b.status] || 0) - (statusSort[a.status] || 0)
+      if (sort !== 0){ return sort }
+      return (getSort(b.tag) || 0) - (getSort(a.tag) || 0)
     })
   // 活动分组:
   // 0-已结束, 1-24小时内, 2-本周, 3-30天内, 4-其他
