@@ -23,10 +23,11 @@
   <Page data={server.header} server={server.flag} />
   <Title text="活动一览" />
   <List server={server} />
+  <br/><p class="hint">9月国服千里眼可能会出现较大误差，暂时关闭千里眼预告</p><br/>
   {#if server.forecast}
-    <Title text="千里眼" />
-    <p class="hint">千里眼基于过往活动数据预测，最终活动请以官宣内容为准</p>
-    <List server={server} forecast={true} />
+    <!-- <Title text="千里眼" /> -->
+    <!-- <p class="hint">千里眼基于过往活动数据预测，最终活动请以官宣内容为准</p> -->
+    <!-- <List server={server} forecast={true} /> -->
   {/if}
   <Page data={server.footer} server={server.flag} />
   <Footer server={server} />
