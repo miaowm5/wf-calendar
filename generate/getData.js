@@ -8,6 +8,7 @@ const parseData = (item)=>{
   const timeStart = prop.StartDate.date ? new Date(prop.StartDate.date.start) : null
   const timeEnd = prop.Date.date ? new Date(prop.Date.date.start) : null
   const tag = prop.Tags.select.name
+  const tag2 = prop?.Tag2?.select?.name
   const title = prop.Name.title.map((text)=>text.plain_text).join("")
   const edit = (new Date(item.last_edited_time)).getTime()
   const image = {}
@@ -19,7 +20,7 @@ const parseData = (item)=>{
   }
   return [
     {
-      title, tag, edit,
+      title, tag, tag2, edit,
       timeStart: timeStart ? timeStart.getTime() : undefined,
       timeEnd: timeEnd ? timeEnd.getTime() : undefined,
       id: item.id,
