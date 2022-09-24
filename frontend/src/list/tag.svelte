@@ -1,9 +1,10 @@
 <script>
   import { getColor } from "../tagInfo"
   export let tag
+  export let tag2
 </script>
 
-<p style="background-color: {getColor(tag)}">{tag}</p>
+<p style="background-color: {getColor(tag)}">{tag2 || ''}{tag}</p>
 
 <style>
   p{

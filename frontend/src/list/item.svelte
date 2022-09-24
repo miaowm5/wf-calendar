@@ -17,7 +17,7 @@
 <div class="main" on:click={toggleFold}>
   <Progress status={item.status} remain={item.remain} timeStart={item.timeStart} timeEnd={item.timeEnd} />
   <div class="name">
-    <Tag tag={item.tag} />
+    <Tag tag={item.tag} tag2={item.tag2} />
     <p class="title">{item.title}</p>
   </div>
   {#if !fold || width <= 460}
