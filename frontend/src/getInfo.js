@@ -38,6 +38,15 @@ const handleItem = (info)=>{
   return event
 }
 
+const getTomorrowRemain = ()=>{
+  let tomorrow = new Date()
+  tomorrow = new Date(tomorrow.setDate(tomorrow.getDate() + 1))
+  tomorrow = new Date(
+    `${tomorrow.getFullYear()}-${tomorrow.getMonth() + 1}-${tomorrow.getDate()} UTC+0800`
+  )
+  return (tomorrow - new Date()) / 1000
+}
+
 const handleServer = (info)=>{
   const server = { ...info, forecast: false }
   server.list = server.list
@@ -51,16 +60,18 @@ const handleServer = (info)=>{
       return (getSort(b.tag) || 0) - (getSort(a.tag) || 0)
     })
   // 活动分组:
-  // 0-已结束, 1-24小时内, 2-本周, 3-30天内, 4-其他
-  server.group = [[],[],[],[],[]]
+  // 0-已开始结束, 1-今天内, 2-24小时内, 3-7天内, 4-30天内, 5-更远
+  const tomorrow = getTomorrowRemain()
+  server.group = [[],[],[],[],[],[]]
   server.list.forEach((info)=>{
     if (info.tag === '千里眼'){ server.forecast = true }
     let index = 0
     if (info.status === 'end' || info.status === 'open'){ index = 0 }
-    else if (info.remain < 86400){ index = 1 }
-    else if (info.remain < 86400 * 7){ index = 2 }
-    else if (info.remain < 86400 * 30){ index = 3 }
-    else{ index = 4 }
+    else if (info.remain < tomorrow){ index = 1 }
+    else if (info.remain < 86400){ index = 2 }
+    else if (info.remain < 86400 * 7){ index = 3 }
+    else if (info.remain < 86400 * 30){ index = 4 }
+    else{ index = 5 }
     server.group[index].push(info)
   })
   return server

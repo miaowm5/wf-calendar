@@ -3,7 +3,7 @@
   export let forecast = false
   import Main from './main.svelte'
 
-  const title = ["已开始/结束", "24小时内", "7天内", "30天内", "更远"]
+  const title = ["已开始/结束", "今天", "24小时内", "7天内", "30天内", "更远"]
   const filterList = server.group.map((list)=>{
     return list.filter((item)=>item.tag === '千里眼' ? forecast : !forecast)
   })
