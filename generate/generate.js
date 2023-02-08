@@ -42,7 +42,7 @@ const create = (list, server)=>{
     if (tag === '千里眼'){ return }
     if (timeStart && timeEnd){
       if (tag !== '兑换'){ event.push(genReminder(`[${tag}开始]${title}`, timeStart, server)) }
-      event.push(genReminder(`[${tag}结束]${title}`, timeEnd, server))
+      if (tag !== '停服维护'){ event.push(genReminder(`[${tag}结束]${title}`, timeEnd, server)) }
     }else{
       if (timeStart){ event.push(genReminder(`[${tag}]${title}`, timeStart, server)) }
       if (timeEnd){ event.push(genReminder(`[${tag}]${title}`, timeEnd, server)) }
