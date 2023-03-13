@@ -6,7 +6,8 @@ const getBlock = require('./getBlock')
 const parseData = (item)=>{
   const prop = item.properties
   const timeStart = prop.StartDate.date ? new Date(prop.StartDate.date.start) : null
-  const timeEnd = prop.Date.date ? new Date(prop.Date.date.start) : null
+  let timeEnd = prop.Date.date ? new Date(prop.Date.date.start) : null
+  if (timeStart && timeEnd && (timeStart - timeEnd > 0)){ timeEnd = null }
   const tag = prop.Tags.select.name
   const tag2 = prop?.Tag2?.select?.name
   const title = prop.Name.title.map((text)=>text.plain_text).join("")
