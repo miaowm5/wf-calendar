@@ -35,7 +35,11 @@
     position: relative;
     cursor: pointer;
   }
-  .name{ display: flex; flex: 1; }
+  .name{
+    display: flex;
+    flex: 1;
+    align-items: baseline;
+  }
   .title{ line-height: 1.5em; }
   @media (max-width: 460px){
     .main{ display: block; }

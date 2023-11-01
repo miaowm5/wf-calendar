@@ -15,5 +15,6 @@
     font-size: .9em;
     margin-right: .5em;
     color: white;
+    text-wrap: nowrap;
   }
 </style>
