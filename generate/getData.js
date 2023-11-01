@@ -5,10 +5,16 @@ const getBlock = require('./getBlock')
 
 const parseData = (item)=>{
   const prop = item.properties
-  const timeStart = prop.StartDate.date ? new Date(prop.StartDate.date.start) : null
-  let timeEnd = prop.Date.date ? new Date(prop.Date.date.start) : null
-  if (timeStart && timeEnd && (timeStart - timeEnd > 0)){ timeEnd = null }
+  let time1 = prop.StartDate.date ? new Date(prop.StartDate.date.start) : null
+  let time2 = prop.Date.date ? new Date(prop.Date.date.start) : null
+  // 结束时间小于开始时间的，清空结束时间
+  if (time1 && time2 && (time1 - time2 > 0)){ time2 = null }
   const tag = prop.Tags.select.name
+  let [timeStart, timeEnd] = [time1, time2]
+  // 定期重置/体力药过期/兑换，只保留结束时间
+  if (['定期重置', '体力药过期', '兑换'].includes(tag)){ [timeStart, timeEnd] = [null, time2 || time1] }
+  // 版本更新，只保留开始时间
+  if (tag === '版本更新'){ [timeStart, timeEnd] = [time1 || time2, null] }
   const tag2 = prop?.Tag2?.select?.name
   const title = prop.Name.title.map((text)=>text.plain_text).join("")
   const edit = (new Date(item.last_edited_time)).getTime()
