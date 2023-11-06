@@ -8,7 +8,7 @@
   let promise
   const load = async ()=>{ data = await getInfo() }
   promise = load()
-  let grey = 100
+  let grey = 0
   const updateGrey = (value)=>{ grey = value }
 </script>
 
