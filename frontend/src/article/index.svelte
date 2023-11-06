@@ -1,5 +1,6 @@
 <script>
   export let data
+  export let updateGrey
   import List from '../list/index.svelte'
   import Nav from './nav.svelte'
   import Page from './page.svelte'
@@ -12,6 +13,16 @@
   }
   if (!list[selectServer]){ selectServer = 0 }
   let server = list[selectServer]
+
+  $: {
+    if (server.flag === 'jp'){
+      let lastDay = new Date('2024/2/20/11:00 GMT+8')
+      lastDay = lastDay - new Date()
+      lastDay = lastDay / 1000 / 3600 / 24
+      updateGrey(Math.min(100, Math.max(100 - lastDay, 0)))
+    }
+    else{ updateGrey(0) }
+  }
 </script>
 
 <Nav list={list} current={selectServer} change={(index)=>{

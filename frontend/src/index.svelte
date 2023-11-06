@@ -8,7 +8,11 @@
   let promise
   const load = async ()=>{ data = await getInfo() }
   promise = load()
+  let grey = 100
+  const updateGrey = (value)=>{ grey = value }
 </script>
+
+<div style={`-webkit-filter: grayscale(${grey}%); filter: grayscale(${grey}%);`}>
 
 <header />
 <div class="main">
@@ -18,11 +22,13 @@
   {#await promise}
     <p class="hint">读取日历数据中...</p>
   {:then}
-    <Article data={data} />
+    <Article data={data} updateGrey={updateGrey} />
   {:catch}
     <p class="hint">日历数据读取失败</p>
   {/await}
 {/if}
+</div>
+
 </div>
 
 <style>
