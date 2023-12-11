@@ -11,8 +11,8 @@ const parseData = (item)=>{
   if (time1 && time2 && (time1 - time2 > 0)){ time2 = null }
   const tag = prop.Tags.select.name
   let [timeStart, timeEnd] = [time1, time2]
-  // 定期重置/体力药过期/兑换，只保留结束时间
-  if (['定期重置', '体力药过期', '兑换'].includes(tag)){ [timeStart, timeEnd] = [null, time2 || time1] }
+  // 定期重置/体力药过期，只保留结束时间
+  if (['定期重置', '体力药过期'].includes(tag)){ [timeStart, timeEnd] = [null, time2 || time1] }
   // 版本更新，只保留开始时间
   if (tag === '版本更新'){ [timeStart, timeEnd] = [time1 || time2, null] }
   const tag2 = prop?.Tag2?.select?.name
