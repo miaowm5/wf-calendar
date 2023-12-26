@@ -48,7 +48,7 @@
   .hint{
     line-height: 2em;
     font-size: .9em;
-    color: #777;
+    font-weight: bold;
   }
   .time{
     margin: 4em 0 3em;
