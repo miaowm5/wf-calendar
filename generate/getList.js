@@ -11,14 +11,14 @@ const loadList = async ()=>{
       id, server, flag, header, footer, die,
       notion: url,
     } = item.properties
-    const getValue = (v)=>v.rich_text[0].plain_text
+    const getValue = (v)=>v?.rich_text?.[0]?.plain_text
     return {
       header: getValue(header),
       footer: getValue(footer),
       id:     getValue(id),
       notion: getValue(url),
       flag:   getValue(flag),
-      die:    die || getValue(die),
+      die:    getValue(die),
       server: server.title[0].plain_text,
     }
   })
