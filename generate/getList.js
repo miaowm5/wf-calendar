@@ -18,7 +18,7 @@ const loadList = async ()=>{
       id:     getValue(id),
       notion: getValue(url),
       flag:   getValue(flag),
-      die:    getValue(die),
+      die:    die || getValue(die),
       server: server.title[0].plain_text,
     }
   })
