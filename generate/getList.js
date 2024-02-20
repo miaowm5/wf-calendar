@@ -8,7 +8,7 @@ const loadList = async ()=>{
   })
   return result.results.map((item)=>{
     const {
-      id, server, flag, header, footer,
+      id, server, flag, header, footer, die,
       notion: url,
     } = item.properties
     const getValue = (v)=>v.rich_text[0].plain_text
@@ -18,6 +18,7 @@ const loadList = async ()=>{
       id:     getValue(id),
       notion: getValue(url),
       flag:   getValue(flag),
+      die:    getValue(die),
       server: server.title[0].plain_text,
     }
   })
