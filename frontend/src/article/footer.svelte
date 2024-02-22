@@ -4,20 +4,20 @@
   import Link from './link.svelte'
 </script>
 
-<Title text="手机订阅" />
-<div class="content">
-  <p>使用以下地址将活动日程订阅到手机日历中</p>
-  <Link url="https://wf-calendar.miaowm5.com/event-{server.flag}.ics" media="text/calendar" />
-  <Link url="/manual" desc="订阅教程" />
-</div>
+{#if !server.die}
+  <Title text="手机订阅" />
+  <div class="content">
+    <p>使用以下地址将活动日程订阅到手机日历中</p>
+    <Link url="https://wf-calendar.miaowm5.com/event-{server.flag}.ics" media="text/calendar" />
+    <Link url="/manual" desc="订阅教程" />
+  </div>
+{/if}
 <Title text="意见反馈" />
 <div class="content">
   <Link url="https://nga.178.com/read.php?tid=28982479" prefix="NGA：" />
   <Link url="https://github.com/miaowm5/wf-calendar" prefix="Github：" />
   {#if server.flag === 'ch'}
     <Link url="https://ngabbs.com/nuke.php?func=ucp&uid=60999453" prefix="国服维护协力：" desc="御坂葉子" />
-  {:else}
-    <p>台服、国际服日历维护者募集中</p>
   {/if}
 </div>
 <Title text="相关链接" />

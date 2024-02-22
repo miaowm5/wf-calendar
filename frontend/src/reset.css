@@ -47,11 +47,14 @@ table {
 *::-webkit-scrollbar-track{ background: rgb(237, 236, 233); }
 *::-webkit-scrollbar-thumb{ background: rgb(174, 172, 166); }
 ::-webkit-scrollbar-corner { display: none; }
-*{
-  scrollbar-color: rgb(174, 172, 166) rgb(237, 236, 233);
-  scrollbar-width: thin;
-  box-sizing: border-box;
+
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-color: rgb(174, 172, 166) rgb(237, 236, 233);
+    scrollbar-width: thin;
+  }
 }
+*{ box-sizing: border-box; }
 body{
   font-size: 16px;
   background-image: url(/front-assets/back.jpg)

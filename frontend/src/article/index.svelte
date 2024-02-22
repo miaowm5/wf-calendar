@@ -7,20 +7,15 @@
   import Title from './title.svelte'
   import Footer from './footer.svelte'
   const list = data.list
-  let selectServer = 0
+  let selectServer = 1
   if (localStorage.getItem('selectServer')){
-    selectServer = parseInt(localStorage.getItem('selectServer')) - 0 || 0
+    selectServer = parseInt(localStorage.getItem('selectServer')) - 0 || 1
   }
   if (!list[selectServer]){ selectServer = 0 }
   let server = list[selectServer]
 
   $: {
-    if (server.flag === 'jp'){
-      let lastDay = new Date('2024/2/20/11:00 GMT+8')
-      lastDay = lastDay - new Date()
-      lastDay = lastDay / 1000 / 3600 / 24
-      updateGrey(Math.min(100, Math.max(100 - lastDay, 0)))
-    }
+    if (server.die){ updateGrey(100) }
     else{ updateGrey(0) }
   }
 </script>
@@ -32,14 +27,16 @@
 }} />
 {#key selectServer}
   <Page data={server.header} server={server.flag} />
-  <Title text="活动一览" />
-  <List server={server} />
-  {#if server.forecast}
-    <Title text="千里眼" />
-    <p class="hint">千里眼基于过往活动数据预测，最终活动请以官宣内容为准</p>
-    <List server={server} forecast={true} />
+  {#if !server.die}
+    <Title text="活动一览" />
+    <List server={server} />
+    {#if server.forecast}
+      <Title text="千里眼" />
+      <p class="hint">千里眼基于过往活动数据预测，最终活动请以官宣内容为准</p>
+      <List server={server} forecast={true} />
+    {/if}
+    <Page data={server.footer} server={server.flag} />
   {/if}
-  <Page data={server.footer} server={server.flag} />
   <Footer server={server} />
 {/key}
 <p class="time">日历更新时间：{new Date(data.time).toLocaleString()}</p>
