@@ -1,6 +1,5 @@
 
-const parseData = (item)=>{
-  const prop = item.properties
+const parseData = (prop)=>{
   let time1 = prop.StartDate.date ? new Date(prop.StartDate.date.start) : null
   let time2 = prop.Date.date ? new Date(prop.Date.date.start) : null
   // 结束时间小于开始时间的，清空结束时间
@@ -13,53 +12,50 @@ const parseData = (item)=>{
   if (tag === '版本更新'){ [timeStart, timeEnd] = [time1 || time2, null] }
   const tag2 = prop?.Tag2?.select?.name
   const title = prop.Name.title.map((text)=>text.plain_text).join("")
-  const edit = (new Date(item.last_edited_time)).getTime()
   const image = {}
   if (prop.Image.files && prop.Image.files.length > 0){
     let files = prop.Image.files[0]
-    image.id = item.id
     image.file = files.file.url
     image.format = files.name.split(".")[1]
   }
-  return [
-    {
-      title, tag, tag2, edit,
-      timeStart: timeStart ? timeStart.getTime() : undefined,
-      timeEnd: timeEnd ? timeEnd.getTime() : undefined,
-      id: item.id,
-      image: image.format,
-    },
-    image
-  ]
+  return {
+    title, tag, tag2,
+    timeStart: timeStart ? timeStart.getTime() : undefined,
+    timeEnd: timeEnd ? timeEnd.getTime() : undefined,
+    image,
+  }
 }
 
-const parseDie = (item)=>{
-  const prop = item.properties
+const parseDie = (prop)=>{
   let timeStart = new Date(prop.Time.date.start)
   let title = prop.Name.title.map((text)=>text.plain_text).join("")
   let tag = prop?.Tags?.select?.name
-  const edit = (new Date(item.last_edited_time)).getTime()
   const image = {}
   if (prop.Banner.files && prop.Banner.files.length > 0){
     let files = prop.Banner.files[0]
-    image.id = item.id
     image.file = files.file.url
     image.format = files.name.split(".")[1]
   }
-  return [
-    {
-      title, tag, edit,
-      time: timeStart.getTime(),
-      id: item.id,
-      image: image.format,
-    },
-    image
-  ]
+  return {
+    title, tag,
+    time: timeStart.getTime(),
+    image,
+  }
 }
 
 const parse = (item, type='data')=>{
-  if (type === 'die'){ return parseDie(item) }
-  return parseData(item)
+  const id = item.id
+  const edit = (new Date(item.last_edited_time)).getTime()
+
+  let data = {}
+  if (type === 'die'){ data = parseDie(item.properties) }
+  else{ data = parseData(item.properties) }
+
+  let image = data.image
+  data.image = image.format
+  if (data.image){ image.id = id }
+
+  return [{ id, edit, ...data, }, image]
 }
 
 module.exports = parse
