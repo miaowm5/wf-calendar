@@ -1,6 +1,7 @@
 
 const notion = require('./notion')
 
+// 获取“服务器列表”数据库中的所有的日历数据
 const loadList = async ()=>{
   const result = await notion.databases.query({
     database_id: process.env.NOTION_DATABASE,

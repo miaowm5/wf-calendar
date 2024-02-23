@@ -1,6 +1,7 @@
 
 const notion = require('./notion')
 
+// 解析notion的页面数据。只实现了获取图片block的数据
 const getBlock = async (id)=>{
   let page = await notion.blocks.retrieve({ block_id: id })
   let edit = new Date(page.last_edited_time)
