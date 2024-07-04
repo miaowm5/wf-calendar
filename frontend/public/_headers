@@ -1,5 +1,9 @@
 /data/*
   Access-Control-Allow-Origin: *
 
+/assets/*
+  Cache-Control: max-age=2592000
+
 /banner/*
   Access-Control-Allow-Origin: *
+  Cache-Control: max-age=2592000
