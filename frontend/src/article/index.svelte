@@ -35,8 +35,8 @@
       <p class="hint">千里眼基于过往活动数据预测，最终活动请以官宣内容为准</p>
       <List server={server} forecast={true} />
     {/if}
-    <Page data={server.footer} server={server.flag} />
   {/if}
+  <Page data={server.footer} server={server.flag} />
   <Footer server={server} />
 {/key}
 <p class="time">日历更新时间：{new Date(data.time).toLocaleString()}</p>
