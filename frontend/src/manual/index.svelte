@@ -6,12 +6,18 @@
 </script>
 
 {#if article !== 0}
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <nav on:click={()=>article=0}>◀ 返回</nav>
 {/if}
 <article>
   {#if article === 0}
     <p>请选择订阅方式：</p>
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div class="nav" on:click={()=>article=1}>安卓（MIUI）订阅</div>
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div class="nav" on:click={()=>article=2}>iOS（低版本）订阅</div>
   {:else if article === 1}
     <MIUI/>
