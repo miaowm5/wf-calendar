@@ -2,6 +2,7 @@
   export let data
   export let updateGrey
   import List from '../list/index.svelte'
+  import Milestone from '../milestone/index.svelte'
   import Nav from './nav.svelte'
   import Page from './page.svelte'
   import Title from './title.svelte'
@@ -15,7 +16,7 @@
   let server = list[selectServer]
 
   $: {
-    if (server.die){ updateGrey(100) }
+    if (server.die){ updateGrey(0) }
     else{ updateGrey(0) }
   }
 </script>
@@ -26,8 +27,8 @@
   localStorage.setItem('selectServer', index)
 }} />
 {#key selectServer}
-  <Page data={server.header} server={server.flag} />
   {#if !server.die}
+    <Page data={server.header} server={server.flag} />
     <Title text="活动一览" />
     <List server={server} />
     {#if server.forecast}
@@ -35,8 +36,10 @@
       <p class="hint">千里眼基于过往活动数据预测，最终活动请以官宣内容为准</p>
       <List server={server} forecast={true} />
     {/if}
+    <Page data={server.footer} server={server.flag} />
+  {:else}
+    <Milestone server={server} />
   {/if}
-  <Page data={server.footer} server={server.flag} />
   <Footer server={server} />
 {/key}
 <p class="time">日历更新时间：{new Date(data.time).toLocaleString()}</p>
