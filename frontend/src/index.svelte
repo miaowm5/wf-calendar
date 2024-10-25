@@ -14,7 +14,7 @@
 
 <div style={`-webkit-filter: grayscale(${grey}%); filter: grayscale(${grey}%);`}>
 
-<header />
+<header></header>
 <div class="main">
 {#if document.location.pathname === '/manual'}
   <Manual />
