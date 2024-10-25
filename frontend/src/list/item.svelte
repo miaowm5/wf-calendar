@@ -16,7 +16,7 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div class="main" on:click={toggleFold}>
+<div class="main" onclick={toggleFold}>
   <Progress status={item.status} remain={item.remain} timeStart={item.timeStart} timeEnd={item.timeEnd} />
   <div class="name">
     <Tag tag={item.tag} tag2={item.tag2} />

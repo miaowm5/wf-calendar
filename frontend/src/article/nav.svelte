@@ -10,7 +10,7 @@
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
       class="{index === current ? 'active' : ''}"
-      on:click={()=>change(index)}
+      onclick={()=>change(index)}
     >
       {server.server}日历
     </div>
