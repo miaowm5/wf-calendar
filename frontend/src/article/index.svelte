@@ -17,6 +17,12 @@
 
   $: {
     if (server.die){ updateGrey(0) }
+    else if (server.flag === 'ch'){
+      let lastDay = new Date('2025/8/14/18:00 GMT+8')
+      lastDay = lastDay - new Date()
+      lastDay = lastDay / 1000 / 3600 / 24
+      updateGrey(Math.min(100, Math.max(100 - lastDay, 0)))
+    }
     else{ updateGrey(0) }
   }
 </script>
